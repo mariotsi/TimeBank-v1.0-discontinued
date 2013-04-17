@@ -53,5 +53,6 @@ data DATE,
 richiesto BOOLEAN DEFAULT FALSE,
 descrizione TEXT,
 richiedente VARCHAR(50) REFERENCES utente(username) DEFAULT NULL,
-creatore VARCHAR(50) REFERENCES utente(username) /*In Java controllare che il richiedente non sia anche il cratore */
+creatore VARCHAR(50) REFERENCES utente(username), /*In Java controllare che il richiedente non sia anche il cratore */
+categoria CHAR(3) REFERENCES categoria(id_categoria)
 );
