@@ -5,7 +5,7 @@ CREATE SCHEMA TimeBank;
 SET SEARCH_PATH TO TimeBank;
 
 CREATE TABLE categoria (
-id_categoria CHAR(3) PRIMARY KEY,
+id_categoria SERIAL PRIMARY KEY,
 nome_cat VARCHAR (50)
 );
 
@@ -54,5 +54,5 @@ richiesto BOOLEAN DEFAULT FALSE,
 descrizione TEXT,
 richiedente VARCHAR(50) REFERENCES utente(username) DEFAULT NULL,
 creatore VARCHAR(50) REFERENCES utente(username), /*In Java controllare che il richiedente non sia anche il cratore */
-categoria CHAR(3) REFERENCES categoria(id_categoria)
+categoria INTEGER REFERENCES categoria(id_categoria)
 );
