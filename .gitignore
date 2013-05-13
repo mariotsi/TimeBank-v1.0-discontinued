@@ -1,5 +1,7 @@
 *.class
-
+*.iml
+*.xml
+*.form
 # Package Files #
 *.jar
 *.war
