@@ -10,12 +10,12 @@ package src;
  */
 public class TimeBankServer {
 
-    /**
-     * Sample method
-     */
-    public String hello(String name) {
-        
-       DatabaseHandler db = new DatabaseHandler();
-        return "Hel5lyo " + name+db;
-    }    
+    DatabaseHandler db = new DatabaseHandler();
+
+    public int inserisciUtente(String username, String password, String email, String indirizzo, String cap, String citta, String provincia) {
+        int esito = -3;
+        esito = db.creaUtente(username, password, email, indirizzo, cap, citta, provincia);
+
+        return esito;
+    }
 }

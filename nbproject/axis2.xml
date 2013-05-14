@@ -3,4 +3,7 @@
     <service name="TimeBankServer">
         <service-class>src.TimeBankServer</service-class>
     </service>
+    <libraries>
+        <library-ref name="postgresql-9.2-1002.jdbc4.jar"/>
+    </libraries>
 </axis2>
