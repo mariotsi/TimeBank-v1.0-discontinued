@@ -5,10 +5,8 @@
 package src;
 
 import com.google.gson.Gson;
-import java.lang.reflect.Type;
 import java.sql.*;
 import java.util.ArrayList;
-import java.lang.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,13 +35,13 @@ public class DatabaseHandler {
             stm = conn.createStatement();
 
             stm.executeUpdate("SET SEARCH_PATH TO TimeBank;");
-            stm.close();
+            stm.close();                      
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         }
-
+            
     }
 
     public int creaUtente(String username, String password, String email, String indirizzo, String cap, String citta, String provincia) {
@@ -58,7 +56,7 @@ public class DatabaseHandler {
                 risultatoQuery.close();
                 pstm = conn.prepareStatement("INSERT INTO utente VALUES (?,?,?,0,0,0,0,?,?,?,?);", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
                 pstm.setString(1, username);
-                pstm.setString(2, password);
+                pstm.setString(2, BCrypt.hashpw(password, BCrypt.gensalt()));
                 pstm.setString(3, email);
                 pstm.setString(4, indirizzo);
                 pstm.setString(5, cap);

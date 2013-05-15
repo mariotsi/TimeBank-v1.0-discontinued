@@ -10,6 +10,7 @@
         <copy todir="${basedir}/xml-resources/axis2/lib" flatten="true" overwrite="false">
             <resources>
                 <file file="${file.reference.postgresql-9.2-1002.jdbc4.jar}"/>
+                <file file="${file.reference.gson-2.2.4.jar}"/>
             </resources>
         </copy>
         <jar destfile="${build.dir}/axis2/WEB-INF/services/${ant.project.name}.aar">
