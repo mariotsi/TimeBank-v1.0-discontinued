@@ -23,18 +23,18 @@
 
     </div>
     <div id="corpo">
-    <form id="registrazione">
+    <form id="registrazione"  onsubmit="inserisciUtente()">
 
-        <label for="username">Username:
+        <label for="username">Username:   </label>
             <input id="username" type="text" maxlength="50" />
-        </label>
+
 
         <label for="password">Password:</label>
             <input id="password" type="password" maxlength="50" />
 
 
         <label for="password2">Ridigita Password:</label>
-            <input id="password2" type="password" maxlength="50" />
+            <input id="password2" type="password" maxlength="50" onchange="checkPassword()"/>
 
 
         <label for="email">Email:</label>
