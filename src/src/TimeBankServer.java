@@ -4,6 +4,10 @@
  */
 package src;
 
+import com.google.gson.Gson;
+import java.lang.reflect.Type;
+import java.util.HashMap;
+
 /**
  *
  * @author Simone
@@ -17,5 +21,19 @@ public class TimeBankServer {
         esito = db.creaUtente(username, password, email, indirizzo, cap, citta, provincia);
 
         return esito;
+    }
+    
+    public String[] getProvince(){
+        
+        
+        return db.getProvince();
+    }
+    
+    public String getComuniPerProvincia(String provincia){
+        
+        
+   String dd=db.getComuniPerProvincia(provincia);
+        
+        return dd;
     }
 }
