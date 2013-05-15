@@ -75,11 +75,19 @@ label { /* Stili per la label */
 input, select{
     border: 1px solid  #323232;
     background: #35403b;
+
 }
 select{
     padding: 0px 0px 0px 140px;
     width: 322px;
     text-align: center;
+}
+#provincia{
+    width: 70px;
+    padding: 0px 0px 0px 10px;
+    margin-right: 150px;
+
+
 }
 #comune{
     padding: 0px 0px 0px 10px;
