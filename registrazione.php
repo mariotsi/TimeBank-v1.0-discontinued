@@ -38,7 +38,7 @@
 
 
         <label for="email">Email:</label>
-            <input id="email" type="email" maxlength="50" />
+            <input id="email" type="email" maxlength="50"  onchange="checkEmail()"/>
 
         <label for="indirizzo">Indirizzo:</label>
             <input id="indirizzo" type="text" maxlength="100" />
@@ -49,6 +49,7 @@
         <label for="provincia">Provincia (sigla):</label>
 
         <select id="provincia" onchange="sceltaProvincia()">
+            <option></option>
             <?php
             try {
                 $server= new SoapClient('http://127.0.0.1:8080/axis2/services/TimeBankServer?wsdl');
@@ -67,7 +68,7 @@
 
         <label for="comune">Comune:</label>
             <select id="comune">
-                <option>Seleziona una provincia</option>
+                <option>Seleziona prima una provincia</option>
             </select>
         <input id="invia" type="submit" name="Invia"/>
 
