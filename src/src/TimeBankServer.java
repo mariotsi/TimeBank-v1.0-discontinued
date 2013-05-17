@@ -36,4 +36,10 @@ public class TimeBankServer {
         
         return dd;
     }
+    public int inserisciAnnuncio(String descrizione, String richiedente, String creatore, int categoria) {
+        int esito = -3;
+        esito = db.setAnnuncio(descrizione, richiedente, creatore, categoria);
+        return esito;
+    }
+
 }

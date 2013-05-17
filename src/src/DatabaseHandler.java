@@ -9,6 +9,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -16,11 +19,11 @@ import java.util.logging.Logger;
  */
 public class DatabaseHandler {
 
-    static final String URL = "jdbc:postgresql://localhost:5432/TimeBank";
-    static final String USER = "Simone";
-    static final String PSW = "chiara";
+    static final String URL = "jdbc:postgresql://localhost/myDB";
+    static final String USER = "postgres";
+    static final String PSW = "Rh0C0sTh3t4";
     private Connection conn = null;
-    private String driver = "org.postgresql.Driver";
+    private final String driver = "org.postgresql.Driver";
     private Statement stm = null;
     private PreparedStatement pstm = null;
     private ResultSet risultatoQuery = null;
@@ -35,13 +38,9 @@ public class DatabaseHandler {
             stm = conn.createStatement();
 
             stm.executeUpdate("SET SEARCH_PATH TO TimeBank;");
-            stm.close();                      
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
-            
+            stm.close();
+        } catch (SQLException | ClassNotFoundException e) {System.err.println("errore generico: "+e);}
+
     }
 
     public int creaUtente(String username, String password, String email, String indirizzo, String cap, String citta, String provincia) {
@@ -72,7 +71,7 @@ public class DatabaseHandler {
         } catch (SQLException ex) {
             //Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
             esito = -2;
-            System.err.println("Errore generico");
+            System.err.println("Errore generico: "+ex);
 
         }
         return esito;
@@ -98,7 +97,7 @@ public class DatabaseHandler {
     }
 
     public String getComuniPerProvincia(String provincia) {
-        Comune[] listaComuni=null;
+        Comune[] listaComuni = null;
         int temp = 0;
         try {
             pstm = conn.prepareStatement("SELECT codice_istat, nome FROM comune WHERE provincia=? ORDER BY nome ASC;", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -118,5 +117,45 @@ public class DatabaseHandler {
         String json = gson.toJson(listaComuni);
 
         return json;
+    }
+
+    public Date parseDate(String date) {
+        if (date != null) {
+            String dateFormat = "dd/MM/yyyy";
+            SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+            sdf.setLenient(false);
+            try {
+                Date data = sdf.parse(date);
+                return data;
+            } catch (ParseException e) {
+                System.err.println("Errore di data parsing");
+                return null;
+            }
+        }
+        return null;
+
+    }
+
+    public int setAnnuncio(String descrizione, String richiedente, String creatore, int categoria) {
+        if ((((descrizione != null && richiedente != null) && creatore != null) && categoria > 0) && !richiedente.equals(creatore)) {
+            try {
+                pstm = conn.prepareStatement("INSERT INTO annuncio(data,richiesto,descrizione,richiedente,creatore,categoria) VALUES(?,?,?,?,?,?)");
+                Date date = new Date();
+                long milis = date.getTime() ; 
+                pstm.setTimestamp(1,new Timestamp(milis));
+                pstm.setBoolean(2, false);
+                pstm.setString(3, descrizione);
+                pstm.setString(4, richiedente);
+                pstm.setString(5, creatore);
+                pstm.setInt(6, categoria);
+                esito = pstm.executeUpdate();
+            } catch (SQLException e) {
+                System.err.println("Errore SQL Generico: "+e);
+                esito = -2;
+            }
+        } else {
+            esito = -1;
+        }
+        return esito;
     }
 }
