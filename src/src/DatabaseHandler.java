@@ -110,7 +110,8 @@ public class DatabaseHandler {
             while (risultatoQuery.next()) {
                 listaComuni[temp++] = new Comune(risultatoQuery.getString("codice_istat"), risultatoQuery.getString("nome"));
             }
-
+            pstm.close();
+            risultatoQuery.close();
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -121,20 +122,19 @@ public class DatabaseHandler {
     }
 
    
-    public int setAnnuncio(String descrizione, String richiedente, String creatore, int categoria) {
-        if ((((descrizione != null && richiedente != null) && creatore != null) && categoria > 0) && !richiedente.equals(creatore)) {
+    public int inserisciAnnuncio(String descrizione,String creatore,int categoria) {
+        if (descrizione != null &&  creatore != null && categoria > 0) {
             try {
-                pstm = conn.prepareStatement("INSERT INTO annuncio(data,richiesto,descrizione,richiedente,creatore,categoria) VALUES(?,?,?,?,?,?)");
+                pstm = conn.prepareStatement("INSERT INTO annuncio(data,descrizione,creatore,categoria) VALUES(?,?,?,?)");
                 Calendar c = Calendar.getInstance();
                 Date d = c.getTime();
                 java.sql.Timestamp sqlDate = new java.sql.Timestamp(d.getTime());
                 pstm.setTimestamp(1, sqlDate);
-                pstm.setBoolean(2, false);
-                pstm.setString(3, descrizione);
-                pstm.setString(4, richiedente);
-                pstm.setString(5, creatore);
-                pstm.setInt(6, categoria);
+                pstm.setString(2, descrizione);
+                pstm.setString(3, creatore);
+                pstm.setInt(4, categoria);
                 esito = pstm.executeUpdate();
+                pstm.close();
             } catch (SQLException e) {
                 System.err.println("Errore SQL Generico: "+e);
                 esito = -2;
