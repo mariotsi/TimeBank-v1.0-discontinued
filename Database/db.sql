@@ -49,7 +49,7 @@ SET DATESTYLE TO European;
 
 CREATE TABLE annuncio (
 id_annuncio SERIAL PRIMARY KEY,
-data DATE,
+data TIMESTAMP,
 richiesto BOOLEAN DEFAULT FALSE,
 descrizione TEXT,
 richiedente VARCHAR(50) REFERENCES utente(username) DEFAULT NULL,
