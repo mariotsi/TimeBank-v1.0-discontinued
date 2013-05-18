@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -119,30 +120,15 @@ public class DatabaseHandler {
         return json;
     }
 
-    public Date parseDate(String date) {
-        if (date != null) {
-            String dateFormat = "dd/MM/yyyy";
-            SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
-            sdf.setLenient(false);
-            try {
-                Date data = sdf.parse(date);
-                return data;
-            } catch (ParseException e) {
-                System.err.println("Errore di data parsing");
-                return null;
-            }
-        }
-        return null;
-
-    }
-
+   
     public int setAnnuncio(String descrizione, String richiedente, String creatore, int categoria) {
         if ((((descrizione != null && richiedente != null) && creatore != null) && categoria > 0) && !richiedente.equals(creatore)) {
             try {
                 pstm = conn.prepareStatement("INSERT INTO annuncio(data,richiesto,descrizione,richiedente,creatore,categoria) VALUES(?,?,?,?,?,?)");
-                Date date = new Date();
-                long milis = date.getTime() ; 
-                pstm.setTimestamp(1,new Timestamp(milis));
+                Calendar c = Calendar.getInstance();
+                Date d = c.getTime();
+                java.sql.Timestamp sqlDate = new java.sql.Timestamp(d.getTime());
+                pstm.setTimestamp(1, sqlDate);
                 pstm.setBoolean(2, false);
                 pstm.setString(3, descrizione);
                 pstm.setString(4, richiedente);
