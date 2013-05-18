@@ -20,7 +20,7 @@ import java.util.Date;
  */
 public class DatabaseHandler {
 
-    static final String URL = "jdbc:postgresql://localhost/myDB";
+    static final String URL = "jdbc:postgresql://localhost/TimeBank";
     static final String USER = "postgres";
     static final String PSW = "Rh0C0sTh3t4";
     private Connection conn = null;
