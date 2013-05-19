@@ -147,7 +147,7 @@ public class DatabaseHandler {
     }
 
     public int loginUtente(String username, String password) {
-        esito = 0;
+        esito = -3;
         try {
             pstm = conn.prepareStatement("SELECT password FROM utente WHERE username=?;", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             pstm.setString(1, username);
