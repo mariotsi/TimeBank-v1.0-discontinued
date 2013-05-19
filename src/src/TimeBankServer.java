@@ -19,27 +19,24 @@ public class TimeBankServer {
     public int inserisciUtente(String username, String password, String email, String indirizzo, String cap, String citta, String provincia) {
         int esito = -3;
         esito = db.creaUtente(username, password, email, indirizzo, cap, citta, provincia);
-
         return esito;
     }
     
     public String[] getProvince(){
-        
-        
         return db.getProvince();
     }
     
     public String getComuniPerProvincia(String provincia){
-        
-        
-   String dd=db.getComuniPerProvincia(provincia);
-        
-        return dd;
+        return db.getComuniPerProvincia(provincia); 
     }
     public int inserisciAnnuncio(String descrizione, String creatore, int categoria) {
         int esito = -3;
         esito = db.inserisciAnnuncio(descrizione, creatore, categoria);
         return esito;
     }
+    
+     public int loginUtente(String username, String password){
+         return db.loginUtente(username, password);         
+     }
 
 }
