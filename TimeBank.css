@@ -5,7 +5,18 @@ body {
     font-size: 14px;
 }
 
-#top_container{
+a, a:visited {
+    color: #B4BA22;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #D8DE1A;
+
+}
+
+#top_container {
     position: relative;
     vertical-align: middle;
     margin: 0 auto;
@@ -13,7 +24,7 @@ body {
     text-align: center;
 }
 
-.clessidra{
+.clessidra {
     margin: auto;
     width: 50px;
     height: 150px;
@@ -21,6 +32,7 @@ body {
     display: inline-block;
     background: url(clessidra.gif) no-repeat center center;
 }
+
 /*
 .clessidra:hover{
     background: url(clessidra.gif) no-repeat;
@@ -28,7 +40,7 @@ body {
     display: inline-block;
 }
 */
-h3{
+h3 {
     position: relative;
     top: -60px;
     line-height: 75px;
@@ -37,19 +49,21 @@ h3{
     margin: auto 0px;
 }
 
-#top{
+#top {
     height: 150px;
     padding: 0px;
 }
 
-label, input, textarea, select{ /* Stili comuni agli elementi del form */
+label, input, textarea, select {
+    /* Stili comuni agli elementi del form */
     color: #dedede; /* Colore del testo */
     float: left; /* Float a sinistra */
     font-family: Verdana, sans-serif; /* Tipo di carattere per il testo */
     margin: 10px 0; /* Margini */
 }
 
-input, textarea, select { /* Stili per il campo di testo e per la textarea */
+input, textarea, select {
+    /* Stili per il campo di testo e per la textarea */
     background: #1C1C1C; /* Colore di sfondo */
     border: 1px solid #323232; /* Bordo */
     color: #fff; /* Colore del testo */
@@ -59,49 +73,83 @@ input, textarea, select { /* Stili per il campo di testo e per la textarea */
     padding: 0 10px; /* Padding */
 }
 
-label { /* Stili per la label */
+label {
+    /* Stili per la label */
     display: block; /* Impostiamo la label come elemento blocco */
     line-height: 30px; /* Altezza di riga */
     width: 150px; /* Larghezza */
 }
 
-input, select{
-    border: 1px solid  #323232;
+input, select {
+    border: 1px solid #323232;
     background: #35403b;
 }
 
-select{
+select {
     padding: 0px 0px 0px 140px;
     width: 322px;
     text-align: center;
 }
 
-#provincia{
+#provincia {
     width: 70px;
     padding: 0px 0px 0px 10px;
     margin-right: 150px;
 }
 
-#comune{
+#comune {
     padding: 0px 0px 0px 10px;
     width: 322px;
     text-align: center;
 }
 
-#invia{
+#invia {
     width: 100px;
     margin: 10px auto;
     float: left;
 }
 
-#registrazione{
+#registrazione, #login {
     width: 500px;
     margin: 0px auto;
-    background: #222;
+    background: #222222;
     padding: 25px;
     overflow: hidden;
     -moz-border-radius: 20px;
     -webkit-border-radius: 20px;
     border-radius: 20px;
 }
+
+#login {
+    position: relative;
+}
+
+#nonregistrato {
+    clear: both;
+    display: block;
+    width: 100%;
+
+}
+
+#invialogin {
+    position: relative;
+    width: 100px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: -50px;
+    clear: both;
+    left: 50%;
+}
+
+.errori {
+    float: right;
+    text-align: right;
+    width: 400px;
+    height: 20px;
+    margin-right: 50px;
+    color: red;
+    font-weight: bold;
+
+}
+
 
