@@ -2,6 +2,7 @@
 <axis2 xmlns="http://www.netbeans.org/ns/axis2/1">
     <service name="TimeBankServer">
         <service-class>src.TimeBankServer</service-class>
+        <generate-wsdl targetNamespace="http://src/" schemaNamespace="http://src/xsd"/>
     </service>
     <libraries>
         <library-ref name="postgresql-9.2-1002.jdbc4.jar"/>

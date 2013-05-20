@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:axis2="http://src/" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:ns0="http://src/xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://src/">
+    <wsdl:types>
+        <xs:schema xmlns:ns="http://src/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://src/xsd">
+            <xs:element name="inserisciAnnuncio">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="descrizione" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="creatore" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="categoria" type="xs:int"/>
+                        <xs:element minOccurs="0" name="calendario" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="inserisciAnnuncioResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" type="xs:int"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="inserisciUtente">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="email" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="indirizzo" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="cap" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="citta" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="provincia" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="inserisciUtenteResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" type="xs:int"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="loginUtente">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="loginUtenteResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" type="xs:int"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getCategorieResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getComuniPerProvincia">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="provincia" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getComuniPerProvinciaResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getProvinceResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="inserisciUtenteRequest">
+        <wsdl:part name="parameters" element="ns0:inserisciUtente"/>
+    </wsdl:message>
+    <wsdl:message name="inserisciUtenteResponse">
+        <wsdl:part name="parameters" element="ns0:inserisciUtenteResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getCategorieRequest"/>
+    <wsdl:message name="getCategorieResponse">
+        <wsdl:part name="parameters" element="ns0:getCategorieResponse"/>
+    </wsdl:message>
+    <wsdl:message name="loginUtenteRequest">
+        <wsdl:part name="parameters" element="ns0:loginUtente"/>
+    </wsdl:message>
+    <wsdl:message name="loginUtenteResponse">
+        <wsdl:part name="parameters" element="ns0:loginUtenteResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getComuniPerProvinciaRequest">
+        <wsdl:part name="parameters" element="ns0:getComuniPerProvincia"/>
+    </wsdl:message>
+    <wsdl:message name="getComuniPerProvinciaResponse">
+        <wsdl:part name="parameters" element="ns0:getComuniPerProvinciaResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getProvinceRequest"/>
+    <wsdl:message name="getProvinceResponse">
+        <wsdl:part name="parameters" element="ns0:getProvinceResponse"/>
+    </wsdl:message>
+    <wsdl:message name="inserisciAnnuncioRequest">
+        <wsdl:part name="parameters" element="ns0:inserisciAnnuncio"/>
+    </wsdl:message>
+    <wsdl:message name="inserisciAnnuncioResponse">
+        <wsdl:part name="parameters" element="ns0:inserisciAnnuncioResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="TimeBankServerPortType">
+        <wsdl:operation name="inserisciUtente">
+            <wsdl:input message="axis2:inserisciUtenteRequest" wsaw:Action="urn:inserisciUtente"/>
+            <wsdl:output message="axis2:inserisciUtenteResponse" wsaw:Action="urn:inserisciUtenteResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getCategorie">
+            <wsdl:input message="axis2:getCategorieRequest" wsaw:Action="urn:getCategorie"/>
+            <wsdl:output message="axis2:getCategorieResponse" wsaw:Action="urn:getCategorieResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="loginUtente">
+            <wsdl:input message="axis2:loginUtenteRequest" wsaw:Action="urn:loginUtente"/>
+            <wsdl:output message="axis2:loginUtenteResponse" wsaw:Action="urn:loginUtenteResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getComuniPerProvincia">
+            <wsdl:input message="axis2:getComuniPerProvinciaRequest" wsaw:Action="urn:getComuniPerProvincia"/>
+            <wsdl:output message="axis2:getComuniPerProvinciaResponse" wsaw:Action="urn:getComuniPerProvinciaResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getProvince">
+            <wsdl:input message="axis2:getProvinceRequest" wsaw:Action="urn:getProvince"/>
+            <wsdl:output message="axis2:getProvinceResponse" wsaw:Action="urn:getProvinceResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="inserisciAnnuncio">
+            <wsdl:input message="axis2:inserisciAnnuncioRequest" wsaw:Action="urn:inserisciAnnuncio"/>
+            <wsdl:output message="axis2:inserisciAnnuncioResponse" wsaw:Action="urn:inserisciAnnuncioResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="TimeBankServerSOAP11Binding" type="axis2:TimeBankServerPortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="inserisciUtente">
+            <soap:operation soapAction="urn:inserisciUtente" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getCategorie">
+            <soap:operation soapAction="urn:getCategorie" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="loginUtente">
+            <soap:operation soapAction="urn:loginUtente" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getComuniPerProvincia">
+            <soap:operation soapAction="urn:getComuniPerProvincia" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getProvince">
+            <soap:operation soapAction="urn:getProvince" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="inserisciAnnuncio">
+            <soap:operation soapAction="urn:inserisciAnnuncio" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="TimeBankServerSOAP12Binding" type="axis2:TimeBankServerPortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="inserisciUtente">
+            <soap12:operation soapAction="urn:inserisciUtente" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getCategorie">
+            <soap12:operation soapAction="urn:getCategorie" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="loginUtente">
+            <soap12:operation soapAction="urn:loginUtente" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getComuniPerProvincia">
+            <soap12:operation soapAction="urn:getComuniPerProvincia" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getProvince">
+            <soap12:operation soapAction="urn:getProvince" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="inserisciAnnuncio">
+            <soap12:operation soapAction="urn:inserisciAnnuncio" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="TimeBankServerHttpBinding" type="axis2:TimeBankServerPortType">
+        <http:binding verb="POST"/>
+        <wsdl:operation name="inserisciUtente">
+            <http:operation location="TimeBankServer/inserisciUtente"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="inserisciUtente"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="inserisciUtente"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getCategorie">
+            <http:operation location="TimeBankServer/getCategorie"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="getCategorie"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="getCategorie"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="loginUtente">
+            <http:operation location="TimeBankServer/loginUtente"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="loginUtente"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="loginUtente"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getComuniPerProvincia">
+            <http:operation location="TimeBankServer/getComuniPerProvincia"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="getComuniPerProvincia"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="getComuniPerProvincia"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getProvince">
+            <http:operation location="TimeBankServer/getProvince"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="getProvince"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="getProvince"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="inserisciAnnuncio">
+            <http:operation location="TimeBankServer/inserisciAnnuncio"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="inserisciAnnuncio"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="inserisciAnnuncio"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="TimeBankServer">
+        <wsdl:port name="TimeBankServerSOAP11port_http" binding="axis2:TimeBankServerSOAP11Binding">
+            <soap:address location="http://localhost:8080/axis2/services/TimeBankServer"/>
+        </wsdl:port>
+        <wsdl:port name="TimeBankServerSOAP12port_http" binding="axis2:TimeBankServerSOAP12Binding">
+            <soap12:address location="http://localhost:8080/axis2/services/TimeBankServer"/>
+        </wsdl:port>
+        <wsdl:port name="TimeBankServerHttpport" binding="axis2:TimeBankServerHttpBinding">
+            <http:address location="http://localhost:8080/axis2/services/TimeBankServer"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

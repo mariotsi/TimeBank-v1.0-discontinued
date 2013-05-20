@@ -7,6 +7,7 @@ package src;
 import com.google.gson.Gson;
 import com.sun.crypto.provider.RSACipher;
 import java.sql.*;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -147,20 +148,24 @@ public class DatabaseHandler {
         return gson.toJson(listaComuni);//Mando la Stringa al client come JSON
     }
 
-    public int inserisciAnnuncio(String descrizione, String creatore, int categoria) {
-        if (descrizione != null && creatore != null && categoria > 0) {
+    public int inserisciAnnuncio(String descrizione, String creatore, int categoria, String calendario) {
+        if (descrizione != null && creatore != null && categoria > 0 && calendario != null) {
             try {
-                pstm = conn.prepareStatement("INSERT INTO annuncio(data,descrizione,creatore,categoria) VALUES(?,?,?,?)");
+                pstm = conn.prepareStatement("INSERT INTO annuncio(data_inserimento,descrizione,creatore,categoria, data_annuncio) VALUES(?,?,?,?,?)");
                 Calendar c = Calendar.getInstance();
+                DateFormat df = new SimpleDateFormat("YYYY-MM-dd HH:mm");
                 Date d = c.getTime();
+                Date disp = df.parse(calendario);
                 java.sql.Timestamp sqlDate = new java.sql.Timestamp(d.getTime());
+                java.sql.Timestamp sqlDisp = new java.sql.Timestamp(disp.getTime());
                 pstm.setTimestamp(1, sqlDate);
                 pstm.setString(2, descrizione);
                 pstm.setString(3, creatore);
                 pstm.setInt(4, categoria);
+                pstm.setTimestamp(5, sqlDisp);
                 esito = pstm.executeUpdate();
                 pstm.close();
-            } catch (SQLException e) {
+            } catch (SQLException | ParseException e) {
                 System.err.println("Errore SQL Generico: " + e);
                 esito = -2;
             }

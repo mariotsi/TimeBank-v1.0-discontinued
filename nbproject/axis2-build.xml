@@ -4,7 +4,29 @@
                 JAX-WS WSIMPORT SECTION
                 ===================
             -->
-    <target name="axis2-aar" depends="compile">
+    <target name="java2wsdl-init" depends="init">
+        <mkdir dir="${basedir}/xml-resources/axis2/META-INF"/>
+        <taskdef name="java2wsdl" classname="org.apache.ws.java2wsdl.Java2WSDLTask">
+            <classpath path="${libs.axis2.classpath}"/>
+        </taskdef>
+    </target>
+    <target name="java2wsdl-check-TimeBankServer" depends="java2wsdl-init">
+        <condition property="java2wsdl-check-TimeBankServer.notRequired">
+            <available file="${basedir}/xml-resources/axis2/META-INF/TimeBankServer.wsdl" type="file"/>
+        </condition>
+    </target>
+    <target name="java2wsdl-TimeBankServer" depends="java2wsdl-check-TimeBankServer, compile" unless="java2wsdl-check-TimeBankServer.notRequired">
+        <java2wsdl className="src.TimeBankServer" serviceName="TimeBankServer" outputLocation="${basedir}/xml-resources/axis2/META-INF" outputFileName="TimeBankServer.wsdl" targetNamespace="http://src/" schemaTargetNamespace="http://src/xsd">
+            <classpath>
+                <pathelement location="${build.dir}/classes"/>
+                <pathelement location="${javac.classpath}"/>
+            </classpath>
+        </java2wsdl>
+    </target>
+    <target name="java2wsdl-clean-TimeBankServer" depends="init">
+        <delete file="${basedir}/xml-resources/axis2/META-INF/TimeBankServer.wsdl"/>
+    </target>
+    <target name="axis2-aar" depends="compile, java2wsdl-TimeBankServer">
         <mkdir dir="${build.dir}/axis2/WEB-INF/services"/>
         <mkdir dir="${basedir}/xml-resources/axis2/lib"/>
         <copy todir="${basedir}/xml-resources/axis2/lib" flatten="true" overwrite="false">
