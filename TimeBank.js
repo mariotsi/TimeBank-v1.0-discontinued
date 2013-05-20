@@ -50,7 +50,7 @@ function inserisciAnnuncio(creatore) {
             success: function (risultato) {
                 switch (risultato) {
                     case -2:
-                        $(".errori").eq(0).val("Errore SQL Generico");
+                        $('#errore').append("Errore SQL Generico");
                         return false;
                         break
                     default:
