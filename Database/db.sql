@@ -50,7 +50,8 @@ SET DATESTYLE TO European;
 
 CREATE TABLE annuncio (
 id_annuncio SERIAL PRIMARY KEY,
-data TIMESTAMP,
+data_inserimento TIMESTAMP,
+data_annuncio TIMESTAMP,
 richiesto BOOLEAN DEFAULT FALSE,
 descrizione TEXT,
 richiedente VARCHAR(50) REFERENCES utente(username) DEFAULT NULL,
