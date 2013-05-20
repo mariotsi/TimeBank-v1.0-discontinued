@@ -74,7 +74,7 @@ if (!isset($username)) {
     $_SESSION['password'] = $password;
 
     try {
-        $server = new SoapClient('http://127.0.0.1:8080/axis2/services/TimeBankServer?wsdl', array('cache_wsdl' => WSDL_CACHE_NONE));
+        $server = new SoapClient('http://ec2-54-214-99-108.us-west-2.compute.amazonaws.com:8080/axis2/services/TimeBankServer?wsdl', array('cache_wsdl' => WSDL_CACHE_NONE));
 
     } catch (Exception $e) {
         echo "<h2>Exception Error!</h2>";

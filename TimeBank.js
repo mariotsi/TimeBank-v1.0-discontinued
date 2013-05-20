@@ -2,6 +2,7 @@ function inserisciUtente() {
 
 
     if (controllaCompilazioneCampi()) {
+
         $.ajax({
             type: "POST",
             url: "comunicatoreSOAP.php",
@@ -17,15 +18,19 @@ function inserisciUtente() {
 
             }),
             dataType: "html",
-            success: function(risultato) {
+            async: false,
+            success: function (risultato) {
                 alert("Bravo bambino speciale"); //WTF?!?! :D
+                return true;
             }
 
         });
-        event.preventDefault();//da togliere dopo il debug
+
+
     } else {
-        event.preventDefault();
         alert("Compila tutti i campi");
+        return false;
+
     }
 }
 
@@ -36,19 +41,21 @@ function inserisciAnnuncio() {
             url: "comunicatoreSOAP.php",
             data: ({
                 ACTION: "4",
-                DESCRIZIONE : $('#nuovoAnnuncio').val(),
+                DESCRIZIONE: $('#nuovoAnnuncio').val(),
                 CREATORE: "raffaele",
                 CATEGORIA: $('#categoria').val(),
             }),
             dataType: "html",
-            success: function(risultato) {
-                
+            async: false,
+            success: function (risultato) {
+                return true;
+
             }
 
         });
-        
+
     } else {
-        event.preventDefault();
+        return false;
         alert("Compila tutti i campi");
     }
 }
@@ -65,7 +72,7 @@ function sceltaProvincia() {
             PROVINCIA: value
         }),
         dataType: "html",
-        success: function(risultato) {
+        success: function (risultato) {
             $("#comune").html(risultato);
         }
     });
@@ -103,9 +110,9 @@ function checkPassword() {
 
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
 
-    $('#password').keyup(function() {
+    $('#password').keyup(function () {
 
         //alert($('#password').css('background').contains('spunta_verde.png').toString());
         if ($('#password').css('background').indexOf('spunta_verde.png') >= 0) {
@@ -116,7 +123,7 @@ $(document).ready(function() {
         }
     })
 
-    $('#email').keyup(function() {
+    $('#email').keyup(function () {
 
         $('#email').css({'font-weight': 'normal'});
         if ($('#password').css('background').indexOf('spunta_verde.png') >= 0) {

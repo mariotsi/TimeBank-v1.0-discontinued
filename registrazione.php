@@ -13,79 +13,71 @@
     <div id="top">
         <div id="top_container">
             <div class="clessidra"></div>
-             <h3>Time Bank</h3>
+            <h3>Time Bank</h3>
+
             <div class="clessidra"></div>
 
 
         </div>
 
 
-
     </div>
     <div id="corpo">
-    <form id="registrazione"  onsubmit="inserisciUtente()">
+        <form id="registrazione" onsubmit=" return inserisciUtente()">
 
-        <label for="username">Username:   </label>
-            <input id="username" type="text" maxlength="50" />
-
-
-        <label for="password">Password:</label>
-            <input id="password" type="password" maxlength="50" />
+            <label for="username">Username: </label>
+            <input id="username" type="text" maxlength="50"/>
 
 
-        <label for="password2">Ridigita Password:</label>
+            <label for="password">Password:</label>
+            <input id="password" type="password" maxlength="50"/>
+
+
+            <label for="password2">Ridigita Password:</label>
             <input id="password2" type="password" maxlength="50" onchange="checkPassword()"/>
 
 
-        <label for="email">Email:</label>
-            <input id="email" type="email" maxlength="50"  onchange="checkEmail()"/>
+            <label for="email">Email:</label>
+            <input id="email" type="email" maxlength="50" onchange="checkEmail()"/>
 
-        <label for="indirizzo">Indirizzo:</label>
-            <input id="indirizzo" type="text" maxlength="100" />
+            <label for="indirizzo">Indirizzo:</label>
+            <input id="indirizzo" type="text" maxlength="100"/>
 
-        <label for="cap">CAP:</label>
-            <input id="cap" type="text" maxlength="5" />
+            <label for="cap">CAP:</label>
+            <input id="cap" type="text" maxlength="5"/>
 
-        <label for="provincia">Provincia (sigla):</label>
+            <label for="provincia">Provincia (sigla):</label>
 
-        <select id="provincia" onchange="sceltaProvincia()">
-            <option></option>
-            <?php
-            try {
-                $server= new SoapClient('http://127.0.0.1:8080/axis2/services/TimeBankServer?wsdl');
-                //$parameters=array('value'=>35);
-                $result = $server->getProvince();
-                foreach ($result->return as $temp)  {
-                    $temp = "<option>".$temp."</option>";
-                    echo $temp;
+            <select id="provincia" onchange="sceltaProvincia()">
+                <option></option>
+                <?php
+                try {
+                    $server = new SoapClient('http://127.0.0.1:8080/axis2/services/TimeBankServer?wsdl');
+                    //$parameters=array('value'=>35);
+                    $result = $server->getProvince();
+                    foreach ($result->return as $temp) {
+                        $temp = "<option>" . $temp . "</option>";
+                        echo $temp;
+                    }
+                } catch (Exception $e) {
+                    echo "<h2>Exception Error!</h2>";
+                    echo $e->getMessage();
                 }
-            } catch (Exception $e) {
-                echo "<h2>Exception Error!</h2>";
-                echo $e->getMessage();
-            }
-            ?>
-        </select>
+                ?>
+            </select>
 
-        <label for="comune">Comune:</label>
+            <label for="comune">Comune:</label>
             <select id="comune">
                 <option>Seleziona prima una provincia</option>
             </select>
-        <input id="invia" type="submit" name="Invia"/>
+            <input id="invia" type="submit" name="Invia"/>
 
 
-
-
-
-
-
-
-
-
-</form>
+        </form>
 
     </div>
 
-    </div>
+</div>
 <?php
 /**
  * Created by IntelliJ IDEA.
