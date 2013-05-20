@@ -8,6 +8,7 @@ CREATE TABLE categoria (
 id_categoria SERIAL PRIMARY KEY,
 nome_cat VARCHAR (50)
 );
+COPY categoria FROM 'C:/categorieLavoro.txt';
 
 CREATE TABLE comune (
 codice_istat CHAR(6) PRIMARY KEY,
@@ -20,7 +21,7 @@ cod_fisc CHAR(4),
 abitanti INTEGER
 );
 
-COPY comune FROM 'C:/Users/Simone/Documents/GitHub/TimeBank/Database/listacomuni.txt';
+COPY comune FROM 'C:/listacomuni.txt';
 
 CREATE TABLE cap AS SELECT DISTINCT cap AS cap_list FROM comune ORDER BY cap_list ASC;
 
