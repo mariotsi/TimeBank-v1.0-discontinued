@@ -8,7 +8,7 @@ CREATE TABLE categoria (
 id_categoria SERIAL PRIMARY KEY,
 nome_cat VARCHAR (50)
 );
-COPY categoria FROM 'C:/categorieLavoro.txt';
+COPY categoria(id_categoria) FROM 'C:/categorieLavoro.txt';
 
 CREATE TABLE comune (
 codice_istat CHAR(6) PRIMARY KEY,
