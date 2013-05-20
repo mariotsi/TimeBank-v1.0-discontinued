@@ -41,7 +41,7 @@ function inserisciAnnuncio() {
             url: "comunicatoreSOAP.php",
             data: ({
                 ACTION: "4",
-                DESCRIZIONE: $('#nuovoAnnuncio').val(),
+                DESCRIZIONE: $('#testoAnnuncio').val(),
                 CREATORE: "raffaele",
                 CATEGORIA: $('#categoria').val(),
             }),
