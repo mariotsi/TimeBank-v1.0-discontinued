@@ -35,8 +35,7 @@ switch ($_POST['ACTION']) {
         break;
     case 5:
         if (isset($_SESSION['username'])) {
-            echo "piripicchio";
-            //  echo $_SESSION['username'];
+            echo $_SESSION['username'];
         } else {
             echo "no Utente";
         }
