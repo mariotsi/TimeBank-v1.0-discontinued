@@ -1,7 +1,13 @@
 <?php
 if (isset($_GET['logout']) && $_GET['logout'] === 'true') {
+    
     session_destroy();
-    header("location: " . $_SERVER['HTTP_HOST']);
+   
+    $port = '';
+    if (isset($_SERVER['SERVER_PORT'])) {
+        $port = ":" . $_SERVER['SERVER_PORT'];
+    }
+    header("location:index.php "); 
 
 }
 if (isset($username)) {
