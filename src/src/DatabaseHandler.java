@@ -82,7 +82,7 @@ public class DatabaseHandler {
     }
 
     public String[] getProvince() {
-        ArrayList<String> result = new ArrayList<String>(110);
+        ArrayList<String> result = new ArrayList<>(110);
         ResultSet rs;
         try {
             stm = conn.createStatement();
@@ -98,6 +98,30 @@ public class DatabaseHandler {
         }
 
         return result.toArray(new String[result.size()]);
+    }
+
+    public String getCategorie() {
+        Categoria[] categorie = null;
+        int i = 0;
+        try {
+            stm = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
+            
+            risultatoQuery = stm.executeQuery("SELECT * FROM categoria ORDER BY nome_cat ASC;");
+            risultatoQuery.last();
+            int numCat = risultatoQuery.getRow();
+            categorie = new Categoria[numCat];
+            risultatoQuery.beforeFirst();
+            while (risultatoQuery.next()) {
+                categorie[i++] = new Categoria(risultatoQuery.getInt("id_categoria"),risultatoQuery.getString("nome_cat"));
+            }
+            stm.close();
+            risultatoQuery.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Gson gson = new Gson();
+        return gson.toJson(categorie);
     }
 
     public String getComuniPerProvincia(String provincia) {
@@ -118,7 +142,7 @@ public class DatabaseHandler {
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Gson gson = new Gson();       
+        Gson gson = new Gson();
 
         return gson.toJson(listaComuni);//Mando la Stringa al client come JSON
     }

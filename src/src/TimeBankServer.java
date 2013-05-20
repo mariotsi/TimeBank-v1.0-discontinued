@@ -26,6 +26,10 @@ public class TimeBankServer {
         return db.getProvince();
     }
     
+    public String getCategorie(){
+        return db.getCategorie();
+    }
+    
     public String getComuniPerProvincia(String provincia){
         return db.getComuniPerProvincia(provincia); 
     }
