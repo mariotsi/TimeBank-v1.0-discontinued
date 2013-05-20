@@ -17,8 +17,8 @@ function inserisciUtente() {
 
             }),
             dataType: "html",
-            success: function (risultato) {
-                alert("Bravo bambino speciale");
+            success: function(risultato) {
+                alert("Bravo bambino speciale"); //WTF?!?! :D
             }
 
         });
@@ -28,6 +28,32 @@ function inserisciUtente() {
         alert("Compila tutti i campi");
     }
 }
+
+function inserisciAnnuncio() {
+    if (checkCampiAnnuncio()) {
+        $.ajax({
+            type: "POST",
+            url: "comunicatoreSOAP.php",
+            data: ({
+                ACTION: "4",
+                DESCRIZIONE : $('#nuovoAnnuncio').val(),
+                CREATORE: "raffaele",
+                CATEGORIA: $('#categoria').val(),
+            }),
+            dataType: "html",
+            success: function(risultato) {
+                
+            }
+
+        });
+        
+    } else {
+        event.preventDefault();
+        alert("Compila tutti i campi");
+    }
+}
+
+
 function sceltaProvincia() {
     value = $("#provincia").val();
     //$("#comune").focus();
@@ -39,7 +65,7 @@ function sceltaProvincia() {
             PROVINCIA: value
         }),
         dataType: "html",
-        success: function (risultato) {
+        success: function(risultato) {
             $("#comune").html(risultato);
         }
     });
@@ -77,9 +103,9 @@ function checkPassword() {
 
 }
 
-$(document).ready(function () {
+$(document).ready(function() {
 
-    $('#password').keyup(function () {
+    $('#password').keyup(function() {
 
         //alert($('#password').css('background').contains('spunta_verde.png').toString());
         if ($('#password').css('background').indexOf('spunta_verde.png') >= 0) {
@@ -90,7 +116,7 @@ $(document).ready(function () {
         }
     })
 
-    $('#email').keyup(function () {
+    $('#email').keyup(function() {
 
         $('#email').css({'font-weight': 'normal'});
         if ($('#password').css('background').indexOf('spunta_verde.png') >= 0) {
@@ -153,6 +179,13 @@ function controllaCompilazioneCampi() {
 function loginUtente() {
 
     if ($('#username').val() == "" || $('#password').val() == "") {
+        return false;
+    }
+    return true;
+}
+
+function checkCampiAnnuncio() {
+    if ($('#testoAnnuncio').val() == "" || $('#categoria').val() == "") {
         return false;
     }
     return true;

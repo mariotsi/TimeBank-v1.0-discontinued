@@ -49,6 +49,15 @@ h3 {
     margin: auto 0px;
 }
 
+h4 {
+    position: relative;
+    top: -80px;
+    line-height: 75px;
+    font-size: 20px;
+    display: inline-block;
+    margin: auto 0px;
+}
+
 #top {
     height: 150px;
     padding: 0px;
@@ -71,6 +80,11 @@ input, textarea, select {
     line-height: 30px; /* Altezza di riga */
     width: 300px; /* Larghezza */
     padding: 0 10px; /* Padding */
+}
+
+textarea {
+    height: 300px;
+    width:  300px;
 }
 
 label {
@@ -97,7 +111,7 @@ select {
     margin-right: 150px;
 }
 
-#comune {
+#comune, #categoria {
     padding: 0px 0px 0px 10px;
     width: 322px;
     text-align: center;
@@ -109,7 +123,13 @@ select {
     float: left;
 }
 
-#registrazione, #login {
+#inviaAnnuncio {
+    width: 150px;
+    margin: 10px auto;
+    float: left;
+}
+
+#registrazione, #login, #nuovoAnnuncio{
     width: 500px;
     margin: 0px auto;
     background: #222222;
