@@ -42,7 +42,7 @@ ore_richieste INTEGER DEFAULT 0,
 ore_ricevute INTEGER DEFAULT 0,
 indirizzo VARCHAR(100),
 cap CHAR(5) REFERENCES cap(cap_list),
-citta CHAR(6) REFERENCES comune(codice_istat),
+citta CHAR(6) REFERENCES comune(codice_istat), /*Riferisce il codice istat, non il nome del comune*/
 provincia CHAR(2) REFERENCES province(provincia_list)
 );
 
