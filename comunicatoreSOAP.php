@@ -30,12 +30,13 @@ switch ($_POST['ACTION']) {
         break;
 
     case 4: //creaziono nuovo annuncio
-        $result = $server->inserisciAnnuncio(array('descrizione' => $_POST['DESCRIZIONE'], 'creatore' => $_POST['CREATORE'], 'categoria' => $_POST['CATEGORIA']));
+        $result = $server->inserisciAnnuncio(array('descrizione' => $_POST['DESCRIZIONE'], 'creatore' => $_POST['CREATORE'], 'categoria' => $_POST['CATEGORIA'], 'calendario' => $_POST['DATAORA']));
         print_r($result->return);
         break;
     case 5:
         if (isset($_SESSION['username'])) {
-            echo $_SESSION['username'];
+            echo "piripicchio";
+            //  echo $_SESSION['username'];
         } else {
             echo "no Utente";
         }

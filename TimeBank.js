@@ -35,6 +35,7 @@ function inserisciUtente() {
 }
 
 function inserisciAnnuncio(creatore) {
+    esito = true;
     if (checkCampiAnnuncio()) {
         $.ajax({
             type: "POST",
@@ -44,32 +45,31 @@ function inserisciAnnuncio(creatore) {
                 DESCRIZIONE: $('#testoAnnuncio').val(),
                 CREATORE: creatore,
                 CATEGORIA: $('#categoria').val(),
+                DATAORA: $('#calendario').val().replace('T', ' ')
             }),
             dataType: "html",
             async: false,
             success: function (risultato) {
-                switch (risultato) {
+                switch (parseInt(risultato)) {
                     case -2:
-                        $('#errore').append("Errore SQL Generico");
-                        return false;
+                        $('#errore').html("Errore nell'inserimento dell'annuncio");
+                        esito = false;
                         break
                     default:
-                        return true;
-
+                        esito = true;
                 }
-
-
             }
-
         });
-
+        return esito;
     } else {
+        $('#errore').html("Compila tutti i campi");
         return false;
-        alert("Compila tutti i campi");
+
     }
 }
 
 function insAnnuncio() {
+    esito = true;
     $.ajax({
         type: "POST",
         url: "comunicatoreSOAP.php",
@@ -79,9 +79,10 @@ function insAnnuncio() {
         dataType: "html",
         async: false,
         success: function (risultato) {
-            inserisciAnnuncio(risultato);
+            esito = inserisciAnnuncio(risultato);
         }
     });
+    return esito;
 }
 
 
@@ -216,7 +217,7 @@ function loginUtente() {
 }
 
 function checkCampiAnnuncio() {
-    if ($('#testoAnnuncio').val() == "" || $('#categoria').val() == "") {
+    if ($('#testoAnnuncio').val() == "" || $('#categoria').val() == "" || $('#calendario').val() == "") {
         return false;
     }
     return true;

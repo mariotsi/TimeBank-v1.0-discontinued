@@ -51,29 +51,33 @@ and open the template in the editor.
             ?>
         </select>
         <label for="calendario">Data e ora:</label>
-        <input type="datetime-local" name="calendario" min="<?php 
+        <input type="datetime-local" id="calendario" min="<?php
         $date = getdate();
-            if($date['mon'] < 10){
-                $date['mon'] = "0".$date['mon'];
-            }
-            if($date['mday'] < 10){
-                $date['mday'] = "0".$date['mday'];
-            }
-            if($date['hours'] < 10){
-                $date['hours'] = "0".$date['hours'];
-            }
-            if($date['minutes'] < 10){
-                $date['minutes'] = "0".$date['minutes'];
-            }
-            if($date['seconds'] < 10){
-                $date['seconds'] = "0".$date['seconds'];
-            }
-            /*echo $date['year']."-".$date['mon']."-".$date['mday']."T".$date['hours'].":".$date['minutes'].":".$date['seconds'];
-        */print_r(date('Y-m-d', strtotime("+1 hours"))."T".date('H' ,strtotime("+1 hours")).":00"); ?>" max="<?php print_r(date('Y-m-d', strtotime("+2 months"))."T".date('H' ,strtotime("+1 hours")).":00"); ?>" step="900"/>
+        if ($date['mon'] < 10) {
+            $date['mon'] = "0" . $date['mon'];
+        }
+        if ($date['mday'] < 10) {
+            $date['mday'] = "0" . $date['mday'];
+        }
+        if ($date['hours'] < 10) {
+            $date['hours'] = "0" . $date['hours'];
+        }
+        if ($date['minutes'] < 10) {
+            $date['minutes'] = "0" . $date['minutes'];
+        }
+        if ($date['seconds'] < 10) {
+            $date['seconds'] = "0" . $date['seconds'];
+        }
+        /*echo $date['year']."-".$date['mon']."-".$date['mday']."T".$date['hours'].":".$date['minutes'].":".$date['seconds'];
+    */
+        print_r(date('Y-m-d', strtotime("+1 hours")) . "T" . date('H', strtotime("+1 hours")) . ":00"); ?>"
+               max="<?php print_r(date('Y-m-d', strtotime("+2 months")) . "T" . date('H', strtotime("+1 hours")) . ":00"); ?>"
+               step="900"
+               value="<?php print_r(date('Y-m-d', strtotime("+1 hours")) . "T" . date('H', strtotime("+1 hours")) . ":00"); ?>"/>
         <input id="inviaAnnuncio" type="submit" name="InviaAnnuncio" value="Crea Annuncio"/>
         <span class="errori" id="errore"></span>
     </form>
-</div> 
+</div>
 
 </body>
 </html>
