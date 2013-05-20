@@ -57,6 +57,7 @@ function inserisciAnnuncio(creatore) {
                         break
                     default:
                         esito = true;
+                        break;
                 }
             }
         });

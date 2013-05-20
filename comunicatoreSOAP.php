@@ -30,7 +30,7 @@ switch ($_POST['ACTION']) {
         break;
 
     case 4: //creaziono nuovo annuncio
-        $result = $server->inserisciAnnuncio(array('descrizione' => $_POST['DESCRIZIONE'], 'creatore' => $_POST['CREATORE'], 'categoria' => $_POST['CATEGORIA'], 'calendario' => $_POST['DATAORA']));
+        $result = $server->inserisciAnnuncio(array('dataAnnuncioFromClient' => $_POST['DATAORA'], 'descrizione' => $_POST['DESCRIZIONE'], 'creatore' => $_POST['CREATORE'], 'categoria' => $_POST['CATEGORIA']));
         print_r($result->return);
         break;
     case 5:
