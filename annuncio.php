@@ -3,7 +3,7 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<?php /* include_once "controlloaccessi.php" */ ?>
+<?php include_once "controlloaccessi.php" ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,9 +14,11 @@ and open the template in the editor.
     <script type="text/javascript" src="TimeBank.js"></script>
 </head>
 <body>
+
 <div id="container">
     <div id="top">
         <div id="top_container">
+            <?php include_once "logout.php" ?>
             <div class="clessidra"></div>
             <h3>Time Bank</h3>
 

@@ -16,6 +16,14 @@ a:hover {
 
 }
 
+.logout {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    text-align: right;
+    z-index: 100;
+}
+
 #top_container {
     position: relative;
     vertical-align: middle;

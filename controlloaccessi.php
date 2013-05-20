@@ -1,6 +1,4 @@
 <?php
-include_once "Bcrypt.php";
-$bcrypt = new Bcrypt(10);
 session_start();
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
     // last request was more than 30 minutes ago
@@ -20,7 +18,7 @@ if (!isset($username)) {
     <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Registrazione - TimeBank</title>
+        <title>LogIn - TimeBank</title>
         <link href="TimeBank.css" rel="stylesheet" type="text/css">
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
         <script type="text/javascript" src="TimeBank.js"></script>
@@ -66,7 +64,8 @@ if (!isset($username)) {
     </div>
     </body>
     </html>
-<?php
+    <?php
+    exit;
 
 
 } else {
@@ -74,7 +73,7 @@ if (!isset($username)) {
     $_SESSION['password'] = $password;
 
     try {
-        $server = new SoapClient('http://ec2-54-214-99-108.us-west-2.compute.amazonaws.com:8080/axis2/services/TimeBankServer?wsdl', array('cache_wsdl' => WSDL_CACHE_NONE));
+        $server = new SoapClient('http://127.0.0.1:8080/axis2/services/TimeBankServer?wsdl', array('cache_wsdl' => WSDL_CACHE_NONE));
 
     } catch (Exception $e) {
         echo "<h2>Exception Error!</h2>";
@@ -148,5 +147,5 @@ if (!isset($username)) {
 
     }
     $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
-    exit;
+
 } ?>
