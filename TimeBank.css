@@ -84,7 +84,7 @@ input, textarea, select {
 
 textarea {
     height: 300px;
-    width:  300px;
+    resize: none;
 }
 
 label {
@@ -97,6 +97,7 @@ label {
 input, select {
     border: 1px solid #323232;
     background: #35403b;
+    vertical-align: middle;;
 }
 
 select {
@@ -129,7 +130,7 @@ select {
     float: left;
 }
 
-#registrazione, #login, #nuovoAnnuncio{
+#registrazione, #login, #nuovoAnnuncio {
     width: 500px;
     margin: 0px auto;
     background: #222222;
