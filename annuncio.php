@@ -29,12 +29,12 @@ and open the template in the editor.
     </div>
 </div>
 <div id="corpo">
-    <form id="nuovoAnnuncio" onsubmit="return inserisciAnnuncio()">
+    <form id="nuovoAnnuncio" onsubmit="return insAnnuncio()">
 
-        <label for="testoAnnuncio">testo dell'annuncio:</label>
+        <label for="testoAnnuncio">Testo dell'annuncio:</label>
         <textarea id="testoAnnuncio" type="text" maxlength="1000"></textarea>
 
-        <label for="categoria">categoria:</label>
+        <label for="categoria">Categoria:</label>
         <select id="categoria">
             <option></option>
             <?php
@@ -51,6 +51,7 @@ and open the template in the editor.
             ?>
         </select>
         <input id="inviaAnnuncio" type="submit" name="InviaAnnuncio" value="Crea Annuncio"/>
+        <span class="errori"></span>
     </form>
 </div>
 </body>

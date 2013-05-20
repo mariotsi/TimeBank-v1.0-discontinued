@@ -1,4 +1,5 @@
 <?php
+session_start();
 try {
     $server = new SoapClient('http://127.0.0.1:8080/axis2/services/TimeBankServer?wsdl', array('cache_wsdl' => WSDL_CACHE_NONE));
 
@@ -30,9 +31,15 @@ switch ($_POST['ACTION']) {
 
     case 4: //creaziono nuovo annuncio
         $result = $server->inserisciAnnuncio(array('descrizione' => $_POST['DESCRIZIONE'], 'creatore' => $_POST['CREATORE'], 'categoria' => $_POST['CATEGORIA']));
-        print_r($result);
+        print_r($result->return);
         break;
-
+    case 5:
+        if (isset($_SESSION['username'])) {
+            echo $_SESSION['username'];
+        } else {
+            echo "no Utente";
+        }
+        break;
 
 }
 

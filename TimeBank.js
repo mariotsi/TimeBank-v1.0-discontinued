@@ -34,7 +34,7 @@ function inserisciUtente() {
     }
 }
 
-function inserisciAnnuncio() {
+function inserisciAnnuncio(creatore) {
     if (checkCampiAnnuncio()) {
         $.ajax({
             type: "POST",
@@ -42,13 +42,22 @@ function inserisciAnnuncio() {
             data: ({
                 ACTION: "4",
                 DESCRIZIONE: $('#testoAnnuncio').val(),
-                CREATORE: "raffaele",
+                CREATORE: creatore,
                 CATEGORIA: $('#categoria').val(),
             }),
             dataType: "html",
             async: false,
             success: function (risultato) {
-                return true;
+                switch (risultato) {
+                    case -2:
+                        $(".errori").eq(0).val("Errore SQL Generico");
+                        return false;
+                        break
+                    default:
+                        return true;
+
+                }
+
 
             }
 
@@ -58,6 +67,21 @@ function inserisciAnnuncio() {
         return false;
         alert("Compila tutti i campi");
     }
+}
+
+function insAnnuncio() {
+    $.ajax({
+        type: "POST",
+        url: "comunicatoreSOAP.php",
+        data: ({
+            ACTION: "5"
+        }),
+        dataType: "html",
+        async: false,
+        success: function (risultato) {
+            inserisciAnnuncio(risultato);
+        }
+    });
 }
 
 

@@ -46,7 +46,8 @@ if (!isset($username)) {
                     switch ($_POST['errore']) {
                         case -2:
                             echo "Utente non trovato!";
-                            break; ?> <?php
+
+                            break;
                         case -1:
                             echo "Password Errata";
                             break;
@@ -80,12 +81,17 @@ if (!isset($username)) {
         echo $e->getMessage();
     }
     $result = $server->loginUtente(array('username' => $username, 'password' => $password));
+
+    $port = '';
+    if (isset($_SERVER['SERVER_PORT'])) {
+        $port = ":" . $_SERVER['SERVER_PORT'];
+    }
     switch ($result->return) {
         case -2:
             unset($_SESSION['username']);
             unset($_SESSION['password']);
             //set POST variables
-            $url = "127.0.0.1" . $_SERVER['PHP_SELF'];
+            $url = "127.0.0.1" . $port . $_SERVER['PHP_SELF'];
             $fields = array(
                 'errore' => urlencode($result->return)
 
@@ -111,12 +117,13 @@ if (!isset($username)) {
 
 //close connection
             curl_close($ch);
+            exit;
             break;
         case -1:
             unset($_SESSION['username']);
             unset($_SESSION['password']);
             //set POST variables
-            $url = "127.0.0.1" . $_SERVER['PHP_SELF'];
+            $url = "127.0.0.1" - $port . $_SERVER['PHP_SELF'];
             $fields = array(
                 'errore' => urlencode($result->return)
 
@@ -142,6 +149,7 @@ if (!isset($username)) {
 
 //close connection
             curl_close($ch);
+            exit;
             break;
 
 
