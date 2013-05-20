@@ -33,9 +33,9 @@ public class TimeBankServer {
     public String getComuniPerProvincia(String provincia){
         return db.getComuniPerProvincia(provincia); 
     }
-    public int inserisciAnnuncio(String descrizione, String creatore, int categoria, String calendario) {
+    public int inserisciAnnuncio(String dataAnnuncioFromClient,String descrizione, String creatore, int categoria ) {
         int esito = -3;
-        esito = db.inserisciAnnuncio(descrizione, creatore, categoria, calendario);
+        esito = db.inserisciAnnuncio(dataAnnuncioFromClient,descrizione, creatore, categoria);
         return esito;
     }
     

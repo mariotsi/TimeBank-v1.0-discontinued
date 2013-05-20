@@ -4,8 +4,8 @@
  */
 package src;
 
+
 import com.google.gson.Gson;
-import com.sun.crypto.provider.RSACipher;
 import java.sql.*;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class DatabaseHandler {
 
     static final String URL = "jdbc:postgresql://localhost/TimeBank";
     static final String USER = "postgres";
-    static final String PSW = "Rh0C0sTh3t4";
+    static final String PSW = "chiara";
     private Connection conn = null;
     private final String driver = "org.postgresql.Driver";
     private Statement stm = null;
@@ -148,21 +148,21 @@ public class DatabaseHandler {
         return gson.toJson(listaComuni);//Mando la Stringa al client come JSON
     }
 
-    public int inserisciAnnuncio(String descrizione, String creatore, int categoria, String calendario) {
-        if (descrizione != null && creatore != null && categoria > 0 && calendario != null) {
+    public int inserisciAnnuncio(String dataAnnuncioFromClient, String descrizione, String creatore,  int categoria) {
+        if (descrizione != null && creatore != null && categoria > 0 && dataAnnuncioFromClient != null) {
             try {
-                pstm = conn.prepareStatement("INSERT INTO annuncio(data_inserimento,descrizione,creatore,categoria, data_annuncio) VALUES(?,?,?,?,?)");
-                Calendar c = Calendar.getInstance();
-                DateFormat df = new SimpleDateFormat("YYYY-MM-dd HH:mm");
-                Date d = c.getTime();
-                Date disp = df.parse(calendario);
-                java.sql.Timestamp sqlDate = new java.sql.Timestamp(d.getTime());
-                java.sql.Timestamp sqlDisp = new java.sql.Timestamp(disp.getTime());
-                pstm.setTimestamp(1, sqlDate);
-                pstm.setString(2, descrizione);
-                pstm.setString(3, creatore);
-                pstm.setInt(4, categoria);
-                pstm.setTimestamp(5, sqlDisp);
+                pstm = conn.prepareStatement("INSERT INTO annuncio(data_inserimento, data_annuncio, descrizione, creatore, categoria) VALUES(?,?,?,?,?)");
+                Calendar calendarioJava = Calendar.getInstance();
+                DateFormat formatoDataOraClient = new SimpleDateFormat("YYYY-MM-dd HH:mm");
+                Date calAdesso = calendarioJava.getTime();
+                Date calAnnuncio = formatoDataOraClient.parse(dataAnnuncioFromClient);
+                java.sql.Timestamp data_inserimento = new java.sql.Timestamp(calAdesso.getTime());
+                java.sql.Timestamp data_annuncio = new java.sql.Timestamp(calAnnuncio.getTime());
+                pstm.setTimestamp(1, data_inserimento);
+                pstm.setTimestamp(2, data_annuncio);
+                pstm.setString(3, descrizione);
+                pstm.setString(4, creatore);
+                pstm.setInt(5, categoria);                
                 esito = pstm.executeUpdate();
                 pstm.close();
             } catch (SQLException | ParseException e) {
