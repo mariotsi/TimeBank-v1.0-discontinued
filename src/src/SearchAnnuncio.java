@@ -20,8 +20,8 @@ import java.util.logging.Logger;
 public class SearchAnnuncio {
 
     private int id_annuncio;
-    private Timestamp data_inserimento;
-    private Timestamp data_annuncio;
+    private String data_inserimento;
+    private String data_annuncio;
     private boolean richiesto;
     private String descrizione;
     private String richiedente;
@@ -46,8 +46,8 @@ public class SearchAnnuncio {
             pstm.setInt(1, id_annuncio);
             risultatoQuery=pstm.executeQuery();
             risultatoQuery.next();
-            data_inserimento=risultatoQuery.getTimestamp(2);
-            data_annuncio=risultatoQuery.getTimestamp(3);
+            data_inserimento=risultatoQuery.getString(2);
+            data_annuncio=risultatoQuery.getString(3);
             richiesto=risultatoQuery.getBoolean(4);
             descrizione=risultatoQuery.getString(5);
             richiedente=risultatoQuery.getString(6);
