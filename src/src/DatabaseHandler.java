@@ -156,6 +156,8 @@ public class DatabaseHandler {
                 DateFormat formatoDataOraClient = new SimpleDateFormat("YYYY-MM-dd HH:mm");
                 Date calAdesso = calendarioJava.getTime();
                 Date calAnnuncio = formatoDataOraClient.parse(dataAnnuncioFromClient);
+                String calAdessoStr = formatoDataOraClient.format(calAdesso);
+                calAdesso = formatoDataOraClient.parse(calAdessoStr);
                 java.sql.Timestamp data_inserimento = new java.sql.Timestamp(calAdesso.getTime());
                 java.sql.Timestamp data_annuncio = new java.sql.Timestamp(calAnnuncio.getTime());
                 pstm.setTimestamp(1, data_inserimento);
