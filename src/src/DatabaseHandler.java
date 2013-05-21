@@ -48,7 +48,8 @@ public class DatabaseHandler {
 
     }
 
-    public int creaUtente(String username, String password, String email, String indirizzo, String cap, String citta, String provincia) {
+    public int inserisciUtente(String username, String password, String email, String indirizzo, String cap, String citta, String provincia) {
+        esito=-3;
         try {
             pstm = conn.prepareStatement("SELECT * FROM utente WHERE username=?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             pstm.setString(1, username);
@@ -121,8 +122,8 @@ public class DatabaseHandler {
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Gson gson = new Gson();
-        return gson.toJson(categorie);
+       
+        return new Gson().toJson(categorie);
     }
 
     public String getComuniPerProvincia(String provincia) {
@@ -143,19 +144,22 @@ public class DatabaseHandler {
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Gson gson = new Gson();
+        //Gson gson = new Gson();
 
-        return gson.toJson(listaComuni);//Mando la Stringa al client come JSON
+        return new Gson().toJson(listaComuni);//Mando la Stringa al client come JSON
     }
 
     public int inserisciAnnuncio(String dataAnnuncioFromClient, String descrizione, String creatore,  int categoria) {
+        esito=-3;
         if (descrizione != null && creatore != null && categoria > 0 && dataAnnuncioFromClient != null) {
             try {
                 pstm = conn.prepareStatement("INSERT INTO annuncio(data_inserimento, data_annuncio, descrizione, creatore, categoria) VALUES(?,?,?,?,?)");
                 Calendar calendarioJava = Calendar.getInstance();
                 DateFormat formatoDataOraClient = new SimpleDateFormat("YYYY-MM-dd HH:mm");
                 Date calAdesso = calendarioJava.getTime();
+                //System.out.println(dataAnnuncioFromClient);
                 Date calAnnuncio = formatoDataOraClient.parse(dataAnnuncioFromClient);
+                System.out.println(calAnnuncio.getTime());
                 java.sql.Timestamp data_inserimento = new java.sql.Timestamp(calAdesso.getTime());
                 java.sql.Timestamp data_annuncio = new java.sql.Timestamp(calAnnuncio.getTime());
                 pstm.setTimestamp(1, data_inserimento);
@@ -191,5 +195,10 @@ public class DatabaseHandler {
         } finally {
             return esito;
         }
+    }
+       
+    public String getAnnuncio(int id_annuncio){
+       System.out.println(new Gson().toJson(new SearchAnnuncio(conn).byId(id_annuncio)));
+        return new Gson().toJson(new SearchAnnuncio(conn).byId(id_annuncio));
     }
 }
