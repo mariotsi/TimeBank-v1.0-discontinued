@@ -1,5 +1,6 @@
 <?php
 session_start();
+//print_r($_POST) ;
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
     // last request was more than 30 minutes ago
     session_unset(); // unset $_SESSION variable for the run-time
@@ -8,6 +9,7 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
 }
 
 if (isset($_POST["username"]) || isset($_SESSION["username"])) {
+    //echo "azz";
     $username = isset($_POST["username"]) ? $_POST['username'] : $_SESSION['username'];
     $password = isset($_POST['password']) ? $_POST['password'] : $_SESSION['password'];
 }
@@ -42,8 +44,8 @@ if (!isset($username)) {
             <form id="login" method="POST" action="<?= $_SERVER['PHP_SELF'] ?>" onsubmit="return loginUtente()">
                 <label for="username">Username:</label>
                 <input id="username" name="username" type="text"/>
-            <span class="errori"><?php if (isset ($_POST['errore'])) {
-                    switch ($_POST['errore']) {
+            <span class="errori"><?php if (isset ($_GET['errore'])) {
+                    switch ($_GET['errore']) {
                         case -2:
                             echo "Utente non trovato!";
 
@@ -86,10 +88,22 @@ if (!isset($username)) {
     if (isset($_SERVER['SERVER_PORT'])) {
         $port = ":" . $_SERVER['SERVER_PORT'];
     }
+    // print_r($result->return . "127.0.0.1" . $port . $_SERVER['PHP_SELF']);
     switch ($result->return) {
         case -2:
-            unset($_SESSION['username']);
-            unset($_SESSION['password']);
+            session_unset();
+            session_destroy();
+            unset ($_POST['username']);
+            unset ($_POST['password']);
+            unset ($username);
+            unset ($password);
+
+            $port = '';
+            if (isset($_SERVER['SERVER_PORT'])) {
+                $port = ":" . $_SERVER['SERVER_PORT'];
+            }
+            header("location:?errore=-2");
+            /*
             //set POST variables
             $url = "127.0.0.1" . $port . $_SERVER['PHP_SELF'];
             $fields = array(
@@ -116,12 +130,27 @@ if (!isset($username)) {
             $result = curl_exec($ch);
 
 //close connection
-            curl_close($ch);
+            curl_close($ch);  */
             exit;
             break;
         case -1:
-            unset($_SESSION['username']);
-            unset($_SESSION['password']);
+            //print_r($_SESSION);
+            //unset($_SESSION['username']);
+            // unset($_SESSION['password']);
+            session_unset();
+            session_destroy();
+            unset ($_POST['username']);
+            unset ($_POST['password']);
+            unset ($username);
+            unset ($password);
+            //echo "unsetted";
+            //print_r($_SESSION);
+            $port = '';
+            if (isset($_SERVER['SERVER_PORT'])) {
+                $port = ":" . $_SERVER['SERVER_PORT'];
+            }
+            header("location:?errore=-1");
+            /*
             //set POST variables
             $url = "127.0.0.1" - $port . $_SERVER['PHP_SELF'];
             $fields = array(
@@ -149,6 +178,7 @@ if (!isset($username)) {
 
 //close connection
             curl_close($ch);
+            echo "connesso";*/
             exit;
             break;
 
