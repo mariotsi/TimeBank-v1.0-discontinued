@@ -108,9 +108,9 @@ function checkPassword() {
     password2 = $("#password2").val();
     //alert(password+" "+password2);
     if (password.localeCompare(password2) != 0) {
-        $("#password").css({'background': 'url(spunta_verde.png)'});
+        $("#password").css({'background': 'url(img/spunta_verde.png)'});
         $("#password").css({'background-position': '-80px -32px'});
-        $("#password2").css({'background': 'url(spunta_verde.png)'});
+        $("#password2").css({'background': 'url(img/spunta_verde.png)'});
         $("#password2").css({'background-position': '-80px -32px'});
         $("#password").val("");
         $("#password").focus();
