@@ -161,7 +161,7 @@ public class DatabaseHandler {
                 calAdesso = formatoDataOraClient.parse(calAdessoStr);
                 java.sql.Timestamp data_inserimento = new java.sql.Timestamp(calAdesso.getTime());
                 java.sql.Timestamp data_annuncio = new java.sql.Timestamp(calAnnuncio.getTime());*/
-                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
                 Date adesso = new Date();
                 
                 pstm.setString(1, dateFormat.format(adesso));
