@@ -121,8 +121,8 @@ public class DatabaseHandler {
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Gson gson = new Gson();
-        return gson.toJson(categorie);
+       
+        return new Gson().toJson(categorie);
     }
 
     public String getComuniPerProvincia(String provincia) {
@@ -143,9 +143,9 @@ public class DatabaseHandler {
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Gson gson = new Gson();
+       
 
-        return gson.toJson(listaComuni);//Mando la Stringa al client come JSON
+        return new Gson().toJson(listaComuni);//Mando la Stringa al client come JSON
     }
 
     public int inserisciAnnuncio(String dataAnnuncioFromClient, String descrizione, String creatore,  int categoria) {
