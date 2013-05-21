@@ -48,7 +48,7 @@ public class DatabaseHandler {
 
     }
 
-    public int creaUtente(String username, String password, String email, String indirizzo, String cap, String citta, String provincia) {
+    public int inserisciUtente(String username, String password, String email, String indirizzo, String cap, String citta, String provincia) {
         try {
             pstm = conn.prepareStatement("SELECT * FROM utente WHERE username=?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             pstm.setString(1, username);
@@ -152,6 +152,7 @@ public class DatabaseHandler {
         if (descrizione != null && creatore != null && categoria > 0 && dataAnnuncioFromClient != null) {
             try {
                 pstm = conn.prepareStatement("INSERT INTO annuncio(data_inserimento, data_annuncio, descrizione, creatore, categoria) VALUES(?,?,?,?,?)");
+                /*
                 Calendar calendarioJava = Calendar.getInstance();
                 DateFormat formatoDataOraClient = new SimpleDateFormat("YYYY-MM-dd HH:mm");
                 Date calAdesso = calendarioJava.getTime();
@@ -159,15 +160,18 @@ public class DatabaseHandler {
                 String calAdessoStr = formatoDataOraClient.format(calAdesso);
                 calAdesso = formatoDataOraClient.parse(calAdessoStr);
                 java.sql.Timestamp data_inserimento = new java.sql.Timestamp(calAdesso.getTime());
-                java.sql.Timestamp data_annuncio = new java.sql.Timestamp(calAnnuncio.getTime());
-                pstm.setTimestamp(1, data_inserimento);
-                pstm.setTimestamp(2, data_annuncio);
+                java.sql.Timestamp data_annuncio = new java.sql.Timestamp(calAnnuncio.getTime());*/
+                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                Date adesso = new Date();
+                
+                pstm.setString(1, dateFormat.format(adesso));
+                pstm.setString(2, dataAnnuncioFromClient);
                 pstm.setString(3, descrizione);
                 pstm.setString(4, creatore);
                 pstm.setInt(5, categoria);                
                 esito = pstm.executeUpdate();
                 pstm.close();
-            } catch (SQLException | ParseException e) {
+            } catch (SQLException e) {
                 System.err.println("Errore SQL Generico: " + e);
                 esito = -2;
             }
