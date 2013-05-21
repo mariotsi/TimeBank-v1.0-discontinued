@@ -4,10 +4,6 @@
  */
 package src;
 
-import com.google.gson.Gson;
-import java.lang.reflect.Type;
-import java.util.HashMap;
-
 /**
  *
  * @author Simone
@@ -17,30 +13,31 @@ public class TimeBankServer {
     DatabaseHandler db = new DatabaseHandler();
 
     public int inserisciUtente(String username, String password, String email, String indirizzo, String cap, String citta, String provincia) {
-        int esito = -3;
-        esito = db.creaUtente(username, password, email, indirizzo, cap, citta, provincia);
-        return esito;
+        return db.inserisciUtente(username, password, email, indirizzo, cap, citta, provincia);
     }
-    
-    public String[] getProvince(){
+
+    public String[] getProvince() {
         return db.getProvince();
     }
-    
-    public String getCategorie(){
+
+    public String getCategorie() {
         return db.getCategorie();
     }
-    
-    public String getComuniPerProvincia(String provincia){
-        return db.getComuniPerProvincia(provincia); 
+
+    public String getComuniPerProvincia(String provincia) {
+        return db.getComuniPerProvincia(provincia);
     }
-    public int inserisciAnnuncio(String dataAnnuncioFromClient,String descrizione, String creatore, int categoria ) {
-        int esito = -3;
-        esito = db.inserisciAnnuncio(dataAnnuncioFromClient,descrizione, creatore, categoria);
-        return esito;
+
+    public int inserisciAnnuncio(String dataAnnuncioFromClient, String descrizione, String creatore, int categoria) {
+        return db.inserisciAnnuncio(dataAnnuncioFromClient, descrizione, creatore, categoria);
     }
-    
-     public int loginUtente(String username, String password){
-         return db.loginUtente(username, password);         
-     }
+
+    public int loginUtente(String username, String password) {
+        return db.loginUtente(username, password);
+    }
+
+    public String getAnnuncio(int id_annuncio) {
+        return db.getAnnuncio(id_annuncio);
+    }
 
 }
