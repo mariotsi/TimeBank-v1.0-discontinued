@@ -125,9 +125,9 @@ function checkPassword() {
             alert("Password troppo corta. Minimo 6 caratteri");
 
         } else {
-            $("#password").css({'background': 'url(spunta_verde.png)'});
+            $("#password").css({'background': 'url(img/spunta_verde.png)'});
             $("#password").css({'background-position': '-80px 0px'});
-            $("#password2").css({'background': 'url(spunta_verde.png)'});
+            $("#password2").css({'background': 'url(img/spunta_verde.png)'});
             $("#password2").css({'background-position': '-80px 0px'});
         }
 
