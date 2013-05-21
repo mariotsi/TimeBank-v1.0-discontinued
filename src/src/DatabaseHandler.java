@@ -198,4 +198,8 @@ public class DatabaseHandler {
             return esito;
         }
     }
+
+    String getAnnuncio(int id_annuncio) {
+       return new Gson().toJson(new SearchAnnuncio(conn).byId(id_annuncio));
+    }
 }
