@@ -26,40 +26,44 @@ public class SearchAnnuncio {
     private String descrizione;
     private String richiedente;
     private String creatore;
-    private int categoria;
+    private int id_categoria;
+    private String nome_cat;
+    private int codiceErrore = -2;
     private DatabaseHandler db;
     private final Connection conn;
     private PreparedStatement pstm;
     private ResultSet risultatoQuery;
-    private int codiceErrore=0;
 
     public SearchAnnuncio(Connection conn) {
         this.conn = conn;
-       
-      
 
     }
-    public Annuncio byId(int id_annuncio){
-      this.id_annuncio=id_annuncio;
+
+    public Annuncio byId(int id_annuncio) {
+        this.id_annuncio = id_annuncio;
         try {
-            pstm = conn.prepareStatement("SELECT * FROM annuncio WHERE id_annuncio=?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            pstm = conn.prepareStatement("SELECT * FROM annuncio,categoria WHERE id_annuncio=? AND categoria=id_categoria", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             pstm.setInt(1, id_annuncio);
-            risultatoQuery=pstm.executeQuery();
-            risultatoQuery.next();
-            data_inserimento=risultatoQuery.getString(2);
-            data_annuncio=risultatoQuery.getString(3);
-            richiesto=risultatoQuery.getBoolean(4);
-            descrizione=risultatoQuery.getString(5);
-            richiedente=risultatoQuery.getString(6);
-            creatore=risultatoQuery.getString(7);
-            categoria=risultatoQuery.getInt(8);
+            risultatoQuery = pstm.executeQuery();
+            while (risultatoQuery.next()) {
+                data_inserimento = risultatoQuery.getString(2);
+                data_annuncio = risultatoQuery.getString(3);
+                richiesto = risultatoQuery.getBoolean(4);
+                descrizione = risultatoQuery.getString(5);
+                richiedente = risultatoQuery.getString(6);
+                creatore = risultatoQuery.getString(7);
+                id_categoria = risultatoQuery.getInt(8);
+                nome_cat = risultatoQuery.getString(10);
+                codiceErrore = 0;
+            }
             risultatoQuery.close();
             pstm.close();
-                    
+            // pstm=conn.prepareStatement("SELECT nome_cat FROM categoria where id_categoria");
+
         } catch (SQLException ex) {
             Logger.getLogger(SearchAnnuncio.class.getName()).log(Level.SEVERE, null, ex);
-            codiceErrore=-1;
+            codiceErrore = -1; //-1 errore SQL, -2 Annuncio non trovato, 0 OK
         }
-    return new Annuncio(id_annuncio, data_inserimento, data_annuncio, richiesto, descrizione, richiedente, creatore, categoria, codiceErrore);
+        return new Annuncio(id_annuncio, data_inserimento, data_annuncio, richiesto, descrizione, richiedente, creatore, id_categoria, nome_cat, codiceErrore);
     }
 }

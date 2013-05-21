@@ -19,10 +19,11 @@ public class Annuncio {
     private String descrizione;
     private String richiedente;
     private String creatore;
-    private int categoria;
+    private int id_categoria;
+    private String nome_cat;
     private int codiceErrore;
 
-    Annuncio(int id_annuncio, String data_inserimento, String data_annuncio, boolean richiesto, String descrizione, String richiedente, String creatore, int categoria, int codiceErrore) {
+    Annuncio(int id_annuncio, String data_inserimento, String data_annuncio, boolean richiesto, String descrizione, String richiedente, String creatore, int id_categoria, String nome_cat,int codiceErrore) {
         this.id_annuncio=id_annuncio;
         this.data_inserimento=data_inserimento;
         this.data_annuncio=data_annuncio;
@@ -30,7 +31,8 @@ public class Annuncio {
         this.descrizione=descrizione;
         this.richiedente=richiedente;
         this.creatore=creatore;
-        this.categoria=categoria;
+        this.id_categoria=id_categoria;
+        this.nome_cat=nome_cat;
         this.codiceErrore=codiceErrore;
     }
     
