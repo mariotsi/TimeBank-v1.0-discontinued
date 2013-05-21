@@ -39,7 +39,7 @@ public class TimeBankServer {
     }
 
     public String getAnnuncio(int id_annuncio) {
-        return new Gson().toJson(getAnnuncio(id_annuncio));
+        return db.getAnnuncio(id_annuncio);
     }
 
 }
