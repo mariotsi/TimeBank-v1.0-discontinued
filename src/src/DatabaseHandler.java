@@ -154,22 +154,25 @@ public class DatabaseHandler {
         if (descrizione != null && creatore != null && categoria > 0 && dataAnnuncioFromClient != null) {
             try {
                 pstm = conn.prepareStatement("INSERT INTO annuncio(data_inserimento, data_annuncio, descrizione, creatore, categoria) VALUES(?,?,?,?,?)");
-                Calendar calendarioJava = Calendar.getInstance();
-                DateFormat formatoDataOraClient = new SimpleDateFormat("YYYY-MM-dd HH:mm");
+               /* Calendar calendarioJava = Calendar.getInstance();
+                DateFormat formatoDataOraClient = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                 Date calAdesso = calendarioJava.getTime();
                 //System.out.println(dataAnnuncioFromClient);
                 Date calAnnuncio = formatoDataOraClient.parse(dataAnnuncioFromClient);
                 System.out.println(calAnnuncio.getTime());
                 java.sql.Timestamp data_inserimento = new java.sql.Timestamp(calAdesso.getTime());
-                java.sql.Timestamp data_annuncio = new java.sql.Timestamp(calAnnuncio.getTime());
-                pstm.setTimestamp(1, data_inserimento);
-                pstm.setTimestamp(2, data_annuncio);
+                java.sql.Timestamp data_annuncio = new java.sql.Timestamp(calAnnuncio.getTime());*/
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                Date date = new Date();
+                String data_inserimento=dateFormat.format(date);                
+                pstm.setString(1, data_inserimento);
+                pstm.setString(2, dataAnnuncioFromClient);
                 pstm.setString(3, descrizione);
                 pstm.setString(4, creatore);
                 pstm.setInt(5, categoria);                
                 esito = pstm.executeUpdate();
                 pstm.close();
-            } catch (SQLException | ParseException e) {
+            } catch (SQLException e) {
                 System.err.println("Errore SQL Generico: " + e);
                 esito = -2;
             }
