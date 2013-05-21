@@ -13,8 +13,8 @@ import java.sql.Timestamp;
  */
 public class Annuncio {
     private int id_annuncio;
-    private Timestamp data_inserimento;
-    private Timestamp data_annuncio;
+    private String data_inserimento;
+    private String data_annuncio;
     private boolean richiesto;
     private String descrizione;
     private String richiedente;
@@ -22,7 +22,7 @@ public class Annuncio {
     private int categoria;
     private int codiceErrore;
 
-    Annuncio(int id_annuncio, Timestamp data_inserimento, Timestamp data_annuncio, boolean richiesto, String descrizione, String richiedente, String creatore, int categoria, int codiceErrore) {
+    Annuncio(int id_annuncio, String data_inserimento, String data_annuncio, boolean richiesto, String descrizione, String richiedente, String creatore, int categoria, int codiceErrore) {
         this.id_annuncio=id_annuncio;
         this.data_inserimento=data_inserimento;
         this.data_annuncio=data_annuncio;
