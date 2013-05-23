@@ -51,7 +51,7 @@ function inserisciAnnuncio(creatore) {
                     case -2:
                         $('#errore').html("Errore nell'inserimento dell'annuncio");
                         esito = false;
-                        break
+                        break;
                     default:
                         esito = true;
                         break;
