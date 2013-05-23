@@ -238,13 +238,14 @@ function checkData(dataForm) {
             var source_date = new Date();
 
             if (year != source_date.getFullYear()) {
-                alert('Anno consentito: '+source_date.getFullYear());
+                var errMess = source_date.getFullYear();
+                $('#errore').html("Errore: anno consentito "+errMess);
                 $('#calendario').val(dataForm);
                 return false;
             }
 
             if (month > 11 || day > 31 || hour > 23) {
-                alert('Data non Valida');
+                $('#errore').html("Errore: Data non valida");
                 $('#calendario').val(dataForm);
                 return false;
             }
@@ -252,19 +253,19 @@ function checkData(dataForm) {
             var bisestile = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) ? true : false;
 
             if (month == 1 && !bisestile && day > 28) {
-                alert('Data non Valida');
+                $('#errore').html("Errore: Data non valida");
                 $('#calendario').val(dataForm);
                 return false;
             }
 
             if (month == 1 && bisestile && day > 29) {
-                alert('Data non Valida');
+                $('#errore').html("Errore: Data non valida");
                 $('#calendario').val(dataForm);
                 return false;
             }
 
             if ((month == 3 || month == 5 || month == 8 || month == 10) && day > 30) {
-                alert('Data non Valida');
+                $('#errore').html("Errore: Data non valida");
                 $('#calendario').val(dataForm);
                 return false;
             }
@@ -273,21 +274,18 @@ function checkData(dataForm) {
 
             if (month > monthLimit || month < source_date.getMonth() || (month == monthLimit && day > source_date.getDate())) {
                 monthLimit++;
-                alert('Data non valida!\npuoi inserire solo date comprese\ntra oggi e il ' + source_date.getDate() + "/" + monthLimit + "/" + year);
+                $('#errore').html("Errore: puoi inserire solo date comprese tra oggi e il " + source_date.getDate() + "/" + monthLimit + "/" + year);
                 $('#calendario').val(dataForm);
                 return false;
             }
 
         } else {
-            alert('formato data errato!\n (formato corretto: aaaa-mm-gg hh:mm)');
+            $('#errore').html("Errore: formato data errato<br/>(formato corretto: aaaa-mm-gg hh:mm)");
             $('#calendario').val(dataForm);
             return false;
         }
-    } else {
-        alert('riempi il campo data');
-        $('#calendario').val(dataForm);
-        return false;
-    }
+    } else {return false;}
+    
     $('#calendario').val(dataArr);
     return true;
 }
