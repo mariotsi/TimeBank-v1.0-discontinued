@@ -73,8 +73,16 @@ and open the template in the editor.
     */
         print_r(date('Y-m-d', strtotime("+1 hours")) . "T" . date('H', strtotime("+1 hours")) . ":00"); ?>"
                max="<?php print_r(date('Y-m-d', strtotime("+2 months")) . "T" . date('H', strtotime("+1 hours")) . ":00"); ?>"
-               step="900"
-               value="<?php print_r(date('Y-m-d', strtotime("+1 hours")) . "T" . date('H', strtotime("+1 hours")) . ":00"); ?>"/>
+               step="900" 
+              <?php  
+              $dateForm1 = (date('Y-m-d', strtotime("+1 hours")) . " " . date('H', strtotime("+1 hours")) . ":00");
+              $dateForm2 = (date('Y-m-d', strtotime("+1 hours")) . "T" . date('H', strtotime("+1 hours")) . ":00");
+              if (isset($_SERVER['HTTP_USER_AGENT']) && preg_match('(MSIE|Firefox)', $_SERVER['HTTP_USER_AGENT'])) {
+                        echo ' onchange="checkData(\''.$dateForm1.'\')" value="'.$dateForm1.'"';
+              }else{
+                  echo 'value="'.$dateForm2.'"';
+              }
+               ?>/>
         <input id="inviaAnnuncio" type="submit" name="InviaAnnuncio" value="Crea Annuncio"/>
         <span class="errori" id="errore"></span>
     </form>
@@ -82,4 +90,3 @@ and open the template in the editor.
 
 </body>
 </html>
-

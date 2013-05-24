@@ -11,7 +11,6 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
 }
 
 if (isset($_POST["username"]) || isset($_SESSION["username"])) {
-    //echo "azz";
     $username = isset($_POST["username"]) ? $_POST['username'] : $_SESSION['username'];
     $password = isset($_POST['password']) ? $_POST['password'] : $_SESSION['password'];
 }
@@ -92,7 +91,6 @@ if (!isset($username)) {
     if (isset($_SERVER['SERVER_PORT'])) {
         $port = ":" . $_SERVER['SERVER_PORT'];
     }
-    // print_r($result->return . "127.0.0.1" . $port . $_SERVER['PHP_SELF']);
     switch ($result->return) {
         case -2:
             session_unset();
