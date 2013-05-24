@@ -79,11 +79,11 @@ label, input, textarea, select {
     margin: 10px 0; /* Margini */
 }
 
-input, textarea, select {
+input, textarea, select, .dati {
     /* Stili per il campo di testo e per la textarea */
     background: #1C1C1C; /* Colore di sfondo */
     border: 1px solid #323232; /* Bordo */
-    color: #fff; /* Colore del testo */
+    color: #dedede; /* Colore del testo */
     height: 30px; /* Altezza */
     line-height: 30px; /* Altezza di riga */
     width: 300px; /* Larghezza */
@@ -95,17 +95,40 @@ textarea {
     resize: none;
 }
 
-label {
+label, .etichetta {
     /* Stili per la label */
     display: block; /* Impostiamo la label come elemento blocco */
     line-height: 30px; /* Altezza di riga */
     width: 150px; /* Larghezza */
 }
 
-input, select {
+.etichetta {
+    display: inline-block;
+    margin: 10px 0px;
+    height: 32px;
+}
+
+input, select, .dati {
     border: 1px solid #323232;
     background: #35403b;
-    vertical-align: middle;;
+    vertical-align: middle;
+}
+
+.dati {
+    height: 30px;
+    LINE-HEIGHT: 30px;
+    margin: 10px 0px;
+    display: inline-block;
+}
+
+#richiedente {
+    color: #B4BA22;
+
+}
+
+#descrizione {
+    height: auto;
+
 }
 
 select {
@@ -120,6 +143,11 @@ select {
     margin-right: 150px;
 }
 
+.hidden {
+    display: none;
+
+}
+
 #comune, #categoria {
     padding: 0px 0px 0px 10px;
     width: 322px;
@@ -132,13 +160,27 @@ select {
     float: left;
 }
 
+#indietroAnnuncio {
+    width: 100px;
+    margin: 10px auto;
+    float: left;
+
+}
+
+#richiediAnnuncio {
+    width: 100px;
+    margin: 10px auto;
+    float: right;
+    padding: 0px;
+}
+
 #inviaAnnuncio {
     width: 150px;
     margin: 10px auto;
     float: left;
 }
 
-#registrazione, #login, #nuovoAnnuncio {
+#registrazione, #login, #nuovoAnnuncio, #visualizzaAnnuncio {
     width: 500px;
     margin: 0px auto;
     background: #222222;

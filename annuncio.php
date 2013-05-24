@@ -12,6 +12,7 @@ and open the template in the editor.
     <link href="TimeBank.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="TimeBank.js"></script>
+
 </head>
 <body>
 

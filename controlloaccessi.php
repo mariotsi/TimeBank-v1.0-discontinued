@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (!isset($_SESSION)) {
+    session_start();
+}
 //print_r($_POST) ;
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
     // last request was more than 30 minutes ago
@@ -25,6 +27,7 @@ if (!isset($username)) {
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
         <script type="text/javascript" src="TimeBank.js"></script>
 
+
     </head>
     <body>
     <div id="container">
@@ -41,7 +44,8 @@ if (!isset($username)) {
 
         </div>
         <div id="corpo">
-            <form id="login" method="POST" action="<?= $_SERVER['PHP_SELF'] ?>" onsubmit="return loginUtente()">
+            <form id="login" method="POST" action="<?php echo $_SERVER['PHP_SELF'];
+            if (isset($_GET['id'])) echo "?id=" . $_GET['id']; ?>" onsubmit="return loginUtente()">
                 <label for="username">Username:</label>
                 <input id="username" name="username" type="text"/>
             <span class="errori"><?php if (isset ($_GET['errore'])) {
@@ -185,5 +189,6 @@ if (!isset($username)) {
 
     }
     $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+
 
 } ?>

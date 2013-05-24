@@ -86,6 +86,29 @@ function insAnnuncio() {
     return esito;
 }
 
+function getUsername() {
+    username = '';
+    $.ajax({
+        type: "POST",
+        url: "comunicatoreSOAP.php",
+        data: ({
+            ACTION: "5"
+        }),
+        dataType: "html",
+        async: false,
+        success: function (risultato) {
+            username = risultato;
+        }
+    });
+    //  alert ( $(".dati").eq(0).text());
+    return username;
+
+
+}
+function getURLParameter(name) {
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null
+}
+
 
 function sceltaProvincia() {
     value = $("#provincia").val();
@@ -222,4 +245,53 @@ function checkCampiAnnuncio() {
         return false;
     }
     return true;
+}
+
+function indietro() {
+    window.history.back();
+}
+
+function richiediAnnuncio() {
+    esito = -3;
+    $.ajax({
+        type: "POST",
+        url: "comunicatoreSOAP.php",
+        data: ({
+            ACTION: "6",
+            ID_ANNUNCIO: getURLParameter('id'),    //id_articolo preso dall'URL
+            RICHIEDENTE: getUsername(),   //prende il nome dell'utente da $_SESSION
+            CREATORE: $(".dati").eq(0).text()//seleziona la prima occorrenza della classe "dati". Aggiungo il creatore per poter fare un controllo (lato server) id_annuncio <-> creatore
+        }),
+        dataType: "html",
+        async: false,
+        success: function (risultato) {
+            esito = risultato;
+        }
+    });
+    switch (parseInt(esito)) {
+        case -4:
+            $('#errore').html("L'annuncio non può essere richiesto da chi l'ha creato");
+            $('#errore').css({display: 'inline-block'});
+            break;
+        case -3:
+            $('#errore').html("Impossibile richiedere l'annuncio");
+            $('#errore').css({display: 'inline-block'});
+            break;
+        case -2:
+            $('#errore').html("Annuncio già richiesto");
+            $('#errore').css({display: 'inline-block'});
+            break;
+        case -1:
+            $('#errore').html("Errore DB - Annuncio non trovato");
+            $('#errore').css({display: 'inline-block'});
+            break;
+        case -0:
+            alert("Hai correttamente richiesto l'annuncio");
+            window.location.reload();
+            break;
+
+    }  //fare il controllo errori
+    // sul server controllare prima di richiedere l'annuncio che sia effettivamente non richiesto, errore altrimenti
+
+
 }

@@ -40,7 +40,10 @@ switch ($_POST['ACTION']) {
             echo "no Utente";
         }
         break;
-
+    case 6:
+        $result = $server->richiediAnnuncio(array('id_annuncio' => $_POST['ID_ANNUNCIO'], 'creatore' => $_POST['CREATORE'], 'richiedente' => $_POST['RICHIEDENTE']));
+        echo $result->return;
+        break;
 }
 
 
