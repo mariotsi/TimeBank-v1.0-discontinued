@@ -41,9 +41,8 @@ public class TimeBankServer {
     public String getAnnuncio(int id_annuncio) {
         return db.getAnnuncio(id_annuncio);
     }
-    
-    public int richiediAnnuncio(int id_annuncio, String creatore, String richiedente){
+
+    public int richiediAnnuncio(int id_annuncio, String creatore, String richiedente) {
         return db.richiediAnnuncio(id_annuncio, creatore, richiedente);
     }
-
 }

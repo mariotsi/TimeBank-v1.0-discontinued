@@ -5,17 +5,17 @@
  */
 package src;
 
-
 /**
  *
  * @author Simone
  */
 public class Comune {
+
     private String codice_istat;
     private String nome;
-    public Comune(String codice_istat, String nome){
-        this.codice_istat=codice_istat;
-        this.nome=nome;
+
+    public Comune(String codice_istat, String nome) {
+        this.codice_istat = codice_istat;
+        this.nome = nome;
     }
-    
 }

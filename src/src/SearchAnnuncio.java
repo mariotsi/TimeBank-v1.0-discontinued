@@ -36,7 +36,6 @@ public class SearchAnnuncio {
 
     public SearchAnnuncio(Connection conn) {
         this.conn = conn;
-
     }
 
     public Annuncio byId(int id_annuncio) {
@@ -58,8 +57,6 @@ public class SearchAnnuncio {
             }
             risultatoQuery.close();
             pstm.close();
-            // pstm=conn.prepareStatement("SELECT nome_cat FROM categoria where id_categoria");
-
         } catch (SQLException ex) {
             Logger.getLogger(SearchAnnuncio.class.getName()).log(Level.SEVERE, null, ex);
             codiceErrore = -1; //-1 errore SQL, -2 Annuncio non trovato, 0 OK

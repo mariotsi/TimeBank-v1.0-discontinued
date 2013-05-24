@@ -10,10 +10,11 @@ package src;
  * @author raffaele
  */
 public class Categoria {
+
     private int id_categoria;
     private String nome_cat;
-    
-    public Categoria(int id_categoria, String nome_cat){
+
+    public Categoria(int id_categoria, String nome_cat) {
         this.id_categoria = id_categoria;
         this.nome_cat = nome_cat;
     }

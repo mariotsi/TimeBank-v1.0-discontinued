@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package src;
 
 import com.google.gson.Gson;
@@ -15,10 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- *
- * @author Simone
- */
 public class DatabaseHandler {
 
     static final String URL = "jdbc:postgresql://localhost/TimeBank";
@@ -38,7 +30,6 @@ public class DatabaseHandler {
             //connessione al DB
             conn = DriverManager.getConnection(URL, USER, PSW);
             stm = conn.createStatement();
-
             stm.executeUpdate("SET SEARCH_PATH TO TimeBank;");
             stm.close();
         } catch (SQLException | ClassNotFoundException e) {
@@ -76,7 +67,6 @@ public class DatabaseHandler {
             //Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
             esito = -2;
             System.err.println("Errore generico: " + ex);
-
         }
         return esito;
     }
@@ -96,7 +86,6 @@ public class DatabaseHandler {
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return result.toArray(new String[result.size()]);
     }
 
@@ -105,7 +94,6 @@ public class DatabaseHandler {
         int i = 0;
         try {
             stm = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-
             risultatoQuery = stm.executeQuery("SELECT * FROM categoria ORDER BY nome_cat ASC;");
             risultatoQuery.last();
             int numCat = risultatoQuery.getRow();
@@ -116,11 +104,9 @@ public class DatabaseHandler {
             }
             stm.close();
             risultatoQuery.close();
-
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return new Gson().toJson(categorie);
     }
 
@@ -142,8 +128,6 @@ public class DatabaseHandler {
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-
         return new Gson().toJson(listaComuni);//Mando la Stringa al client come JSON
     }
 
@@ -151,18 +135,8 @@ public class DatabaseHandler {
         if (descrizione != null && creatore != null && categoria > 0 && dataAnnuncioFromClient != null) {
             try {
                 pstm = conn.prepareStatement("INSERT INTO annuncio(data_inserimento, data_annuncio, descrizione, creatore, categoria) VALUES(?,?,?,?,?)");
-                /*
-                 Calendar calendarioJava = Calendar.getInstance();
-                 DateFormat formatoDataOraClient = new SimpleDateFormat("YYYY-MM-dd HH:mm");
-                 Date calAdesso = calendarioJava.getTime();
-                 Date calAnnuncio = formatoDataOraClient.parse(dataAnnuncioFromClient);
-                 String calAdessoStr = formatoDataOraClient.format(calAdesso);
-                 calAdesso = formatoDataOraClient.parse(calAdessoStr);
-                 java.sql.Timestamp data_inserimento = new java.sql.Timestamp(calAdesso.getTime());
-                 java.sql.Timestamp data_annuncio = new java.sql.Timestamp(calAnnuncio.getTime());*/
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                 Date adesso = new Date();
-
                 pstm.setString(1, dateFormat.format(adesso));
                 pstm.setString(2, dataAnnuncioFromClient);
                 pstm.setString(3, descrizione);
@@ -226,12 +200,10 @@ public class DatabaseHandler {
             } else {
                 esito = -2;//Annuncio già richiesto
             }
-
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
             esito = -1; //Annuncio non trovato - Errore SQL
         }
-
         return esito;
     }
 }
