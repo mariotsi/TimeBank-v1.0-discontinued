@@ -4,7 +4,6 @@
  */
 package src;
 
-
 import com.google.gson.Gson;
 import java.sql.*;
 import java.text.DateFormat;
@@ -105,15 +104,15 @@ public class DatabaseHandler {
         Categoria[] categorie = null;
         int i = 0;
         try {
-            stm = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
-            
+            stm = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
             risultatoQuery = stm.executeQuery("SELECT * FROM categoria ORDER BY nome_cat ASC;");
             risultatoQuery.last();
             int numCat = risultatoQuery.getRow();
             categorie = new Categoria[numCat];
             risultatoQuery.beforeFirst();
             while (risultatoQuery.next()) {
-                categorie[i++] = new Categoria(risultatoQuery.getInt("id_categoria"),risultatoQuery.getString("nome_cat"));
+                categorie[i++] = new Categoria(risultatoQuery.getInt("id_categoria"), risultatoQuery.getString("nome_cat"));
             }
             stm.close();
             risultatoQuery.close();
@@ -121,7 +120,7 @@ public class DatabaseHandler {
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
+
         return new Gson().toJson(categorie);
     }
 
@@ -143,32 +142,32 @@ public class DatabaseHandler {
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
+
 
         return new Gson().toJson(listaComuni);//Mando la Stringa al client come JSON
     }
 
-    public int inserisciAnnuncio(String dataAnnuncioFromClient, String descrizione, String creatore,  int categoria) {
+    public int inserisciAnnuncio(String dataAnnuncioFromClient, String descrizione, String creatore, int categoria) {
         if (descrizione != null && creatore != null && categoria > 0 && dataAnnuncioFromClient != null) {
             try {
                 pstm = conn.prepareStatement("INSERT INTO annuncio(data_inserimento, data_annuncio, descrizione, creatore, categoria) VALUES(?,?,?,?,?)");
                 /*
-                Calendar calendarioJava = Calendar.getInstance();
-                DateFormat formatoDataOraClient = new SimpleDateFormat("YYYY-MM-dd HH:mm");
-                Date calAdesso = calendarioJava.getTime();
-                Date calAnnuncio = formatoDataOraClient.parse(dataAnnuncioFromClient);
-                String calAdessoStr = formatoDataOraClient.format(calAdesso);
-                calAdesso = formatoDataOraClient.parse(calAdessoStr);
-                java.sql.Timestamp data_inserimento = new java.sql.Timestamp(calAdesso.getTime());
-                java.sql.Timestamp data_annuncio = new java.sql.Timestamp(calAnnuncio.getTime());*/
-                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+                 Calendar calendarioJava = Calendar.getInstance();
+                 DateFormat formatoDataOraClient = new SimpleDateFormat("YYYY-MM-dd HH:mm");
+                 Date calAdesso = calendarioJava.getTime();
+                 Date calAnnuncio = formatoDataOraClient.parse(dataAnnuncioFromClient);
+                 String calAdessoStr = formatoDataOraClient.format(calAdesso);
+                 calAdesso = formatoDataOraClient.parse(calAdessoStr);
+                 java.sql.Timestamp data_inserimento = new java.sql.Timestamp(calAdesso.getTime());
+                 java.sql.Timestamp data_annuncio = new java.sql.Timestamp(calAnnuncio.getTime());*/
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                 Date adesso = new Date();
-                
+
                 pstm.setString(1, dateFormat.format(adesso));
                 pstm.setString(2, dataAnnuncioFromClient);
                 pstm.setString(3, descrizione);
                 pstm.setString(4, creatore);
-                pstm.setInt(5, categoria);                
+                pstm.setInt(5, categoria);
                 esito = pstm.executeUpdate();
                 pstm.close();
             } catch (SQLException e) {
@@ -192,6 +191,8 @@ public class DatabaseHandler {
             } else {
                 esito = -2;//Utente non trovato
             }
+            pstm.close();
+            risultatoQuery.close();
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -200,6 +201,37 @@ public class DatabaseHandler {
     }
 
     String getAnnuncio(int id_annuncio) {
-       return new Gson().toJson(new SearchAnnuncio(conn).byId(id_annuncio));
+        return new Gson().toJson(new SearchAnnuncio(conn).byId(id_annuncio));
+    }
+
+    int richiediAnnuncio(int id_annuncio, String creatore, String richiedente) {
+        esito = -3;
+        try {
+            pstm = conn.prepareStatement("SELECT richiesto FROM annuncio WHERE id_annuncio = ? AND creatore = ?;", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            pstm.setInt(1, id_annuncio);
+            pstm.setString(2, creatore);
+            risultatoQuery = pstm.executeQuery();
+            risultatoQuery.next();
+            if (!risultatoQuery.getBoolean(1)) {//se l'annuncio non è già richiesto
+                if (!creatore.equals(richiedente)) {
+                    pstm = conn.prepareStatement("UPDATE annuncio SET richiesto = true, richiedente = ? WHERE id_annuncio = ? AND creatore = ?;", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                    pstm.setString(1, richiedente);
+                    pstm.setInt(2, id_annuncio);
+                    pstm.setString(3, creatore);
+                    pstm.executeUpdate();
+                    esito = 0;
+                } else {
+                    esito = -4; //richiedente = creatore
+                }
+            } else {
+                esito = -2;//Annuncio già richiesto
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+            esito = -1; //Annuncio non trovato - Errore SQL
+        }
+
+        return esito;
     }
 }
