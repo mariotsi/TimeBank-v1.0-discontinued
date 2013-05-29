@@ -29,6 +29,8 @@ public class SearchAnnuncio {
     private int id_categoria;
     private String nome_cat;
     private int codiceErrore = -2;
+    private String nomeComune;
+    private String provincia;
     private DatabaseHandler db;
     private final Connection conn;
     private PreparedStatement pstm;
@@ -41,7 +43,7 @@ public class SearchAnnuncio {
     public Annuncio byId(int id_annuncio) {
         this.id_annuncio = id_annuncio;
         try {
-            pstm = conn.prepareStatement("SELECT * FROM annuncio,categoria WHERE id_annuncio=? AND categoria=id_categoria", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            pstm = conn.prepareStatement("SELECT * FROM annuncio,categoria,utente,comune WHERE id_annuncio=? AND categoria=id_categoria AND creatore=username AND citta=codice_istat", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             pstm.setInt(1, id_annuncio);
             risultatoQuery = pstm.executeQuery();
             while (risultatoQuery.next()) {
@@ -53,6 +55,8 @@ public class SearchAnnuncio {
                 creatore = risultatoQuery.getString(7);
                 id_categoria = risultatoQuery.getInt(8);
                 nome_cat = risultatoQuery.getString(10);
+                provincia = risultatoQuery.getString(21);
+                nomeComune = risultatoQuery.getString(24);
                 codiceErrore = 0;
             }
             risultatoQuery.close();
@@ -61,6 +65,6 @@ public class SearchAnnuncio {
             Logger.getLogger(SearchAnnuncio.class.getName()).log(Level.SEVERE, null, ex);
             codiceErrore = -1; //-1 errore SQL, -2 Annuncio non trovato, 0 OK
         }
-        return new Annuncio(id_annuncio, data_inserimento, data_annuncio, richiesto, descrizione, richiedente, creatore, id_categoria, nome_cat, codiceErrore);
+        return new Annuncio(id_annuncio, data_inserimento, data_annuncio, richiesto, descrizione, richiedente, creatore, id_categoria, nome_cat, codiceErrore, provincia, nomeComune);
     }
 }

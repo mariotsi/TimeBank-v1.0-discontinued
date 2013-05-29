@@ -230,7 +230,7 @@ public class DatabaseHandler {
             risultatoQuery = stm.executeQuery(query);
             while (risultatoQuery.next()) {
                 Annuncio an = new SearchAnnuncio(conn).byId(risultatoQuery.getInt("id_annuncio"));
-                if (an.getCodiceErrore() == 0) {
+                if (an.getCodiceErrore() == 0 && !an.isRichiesto()) {
                     annunci.add(an);
                 }
             }
