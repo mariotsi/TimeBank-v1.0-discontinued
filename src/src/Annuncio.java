@@ -36,4 +36,20 @@ public class Annuncio {
         this.nome_cat = nome_cat;
         this.codiceErrore = codiceErrore;
     }
+    
+    Annuncio (){}
+
+    /**
+     * @return the codiceErrore
+     */
+    public int getCodiceErrore() {
+        return codiceErrore;
+    }
+
+    /**
+     * @param codiceErrore the codiceErrore to set
+     */
+    public void setCodiceErrore(int codiceErrore) {
+        this.codiceErrore = codiceErrore;
+    }
 }

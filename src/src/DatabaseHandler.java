@@ -206,4 +206,46 @@ public class DatabaseHandler {
         }
         return esito;
     }
+
+    String cercaAnnunci(String creatore, String provincia, String comune, int categoria) {
+        Annuncio tmp = new Annuncio();
+        int nParamtro = 0;
+        int errore = 0;
+        ArrayList<Annuncio> annunci = new ArrayList<Annuncio>();
+        String query = "SELECT id_annuncio FROM annuncio JOIN utente ON creatore=username WHERE username=username ";
+        if (creatore != null && creatore!="") {
+            query += "AND creatore='" + creatore + "' ";
+        }
+        if (provincia != null && provincia!="") {
+            query += "AND provincia='" + provincia + "' ";
+        }
+        if (comune != null && comune!="") {
+            query += "AND citta='" + comune + "' ";
+        }
+        if (categoria != -1) {
+            query += "AND categoria=" + categoria + " ";
+        }
+        try {
+            stm = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            risultatoQuery = stm.executeQuery(query);
+            while (risultatoQuery.next()) {
+                Annuncio an = new SearchAnnuncio(conn).byId(risultatoQuery.getInt("id_annuncio"));
+                if (an.getCodiceErrore() == 0) {
+                    annunci.add(an);
+                }
+            }
+        } catch (SQLException ex) {
+            annunci.clear();
+           Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (annunci.isEmpty()) {
+                tmp.setCodiceErrore(-10);
+                 annunci.add(tmp);
+            }
+           
+        }
+
+        return new Gson().toJson(annunci);
+    }
+
 }
