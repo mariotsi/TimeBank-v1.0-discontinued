@@ -19,7 +19,7 @@ function inserisciUtente() {
             }),
             dataType: "html",
             async: false,
-            success: function(risultato) {
+            success: function (risultato) {
                 alert("Utente correttamente Registrato");
                 return true;
             }
@@ -46,7 +46,7 @@ function inserisciAnnuncio(creatore) {
             }),
             dataType: "html",
             async: false,
-            success: function(risultato) {
+            success: function (risultato) {
                 switch (parseInt(risultato)) {
                     case -2:
                         $('#errore').html("Errore nell'inserimento dell'annuncio");
@@ -75,7 +75,7 @@ function insAnnuncio() {
         }),
         dataType: "html",
         async: false,
-        success: function(risultato) {
+        success: function (risultato) {
             esito = inserisciAnnuncio(risultato);
         }
     });
@@ -117,8 +117,14 @@ function sceltaProvincia() {
             PROVINCIA: value
         }),
         dataType: "html",
-        success: function(risultato) {
-            $("#comune").html(risultato);
+        success: function (risultato) {
+            if (window.location.href.indexOf("registrazione.php") > -1) {
+                $("#comune").html(risultato);                             //se siamo su registrazione.php
+            }
+            else {
+                $("#comune").html("<option></option>" + risultato);    //se siamo altrove, in particolare index.php
+                caricaAnnunci();
+            }
         }
     });
 }
@@ -153,9 +159,9 @@ function checkPassword() {
 
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
 
-    $('#password').keyup(function() {
+    $('#password').keyup(function () {
 
 //alert($('#password').css('background').contains('spunta_verde.png').toString());
         if ($('#password').css('background').indexOf('spunta_verde.png') >= 0) {
@@ -166,7 +172,7 @@ $(document).ready(function() {
         }
     })
 
-    $('#email').keyup(function() {
+    $('#email').keyup(function () {
 
         $('#email').css({'font-weight': 'normal'});
         if ($('#password').css('background').indexOf('spunta_verde.png') >= 0) {
@@ -311,7 +317,7 @@ function checkData(dataForm) {
 
             if (year != source_date.getFullYear()) {
                 var errMess = source_date.getFullYear();
-                $('#errore').html("Errore: anno consentito "+errMess);
+                $('#errore').html("Errore: anno consentito " + errMess);
                 $('#calendario').val(dataForm);
                 return false;
             }
@@ -356,8 +362,10 @@ function checkData(dataForm) {
             $('#calendario').val(dataForm);
             return false;
         }
-    } else {return false;}
-    
+    } else {
+        return false;
+    }
+
     $('#calendario').val(dataArr);
     return true;
 }
@@ -372,3 +380,39 @@ function arrotondaMinuti(ora) {
     if (ora >= 45 && ora <= 59)
         return 45;
 }
+
+function caricaAnnunci() {
+
+
+    if ($('#comune').val() == "Seleziona prima una provincia")
+        comune = "";
+    else
+        comune = $('#comune').val();
+
+    if ($('#categoria').val() == 0)
+        categoria = -1;
+    else
+        categoria = $('#categoria').val();
+
+
+    esito = -3;
+    $.ajax({
+        type: "POST",
+        url: "comunicatoreSOAP.php",
+        data: ({
+            ACTION: "7",
+            CREATORE: $('#creatore').val(),
+            PROVINCIA: $('#provincia').val(),
+            COMUNE: comune,
+            CATEGORIA: categoria
+        }),
+        dataType: "html",
+        //async: false,
+        success: function (risultato) {
+            esito = risultato;
+            $('.listaAnnuncio').html("<div id=\"headerAnnuncio\"><span class=\"descrizioneAnnuncio\">Descrizione</span><span class=\"categoriaAnnuncio\">Categoria</span><span class=\"comuneAnnuncio\">Comune</span><span class=\"provinciaAnnuncio\">Prov.</span></div>" + risultato);
+        }
+    });
+}
+
+

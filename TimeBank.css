@@ -10,6 +10,11 @@ a, a:visited {
     text-decoration: none;
 }
 
+a.bianco {
+    color: #fff;
+    text-decoration: none;
+}
+
 a:hover {
     text-decoration: underline;
     color: #D8DE1A;
@@ -223,4 +228,79 @@ select {
 
 }
 
+.errori .centrato {
+    clear: both;
+    margin: 10px;
+}
 
+.erroriCercaAnnunci {
+
+    text-align: center;
+    width: 600px;
+
+    margin: 0px auto;
+    color: red;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.annuncio {
+    display: block;
+    width: 780px;
+    height: 25px;
+    line-height: 25px;
+    padding: 0 10px;
+    box-shadow: 0px 00px 5px white;
+    margin: 3px auto;
+    background: #35403b;
+
+}
+
+#headerAnnuncio {
+    display: block;
+    width: 780px;
+    height: 25px;
+    line-height: 25px;
+    padding: 0 10px;
+    margin: 3px auto;
+    color: #dedede;
+    font-weight: bold;
+}
+
+.listaAnnuncio {
+    width: 800px;
+    margin: 0px auto;
+    background: #222222;
+    padding: 25px;
+    overflow: hidden;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.descrizioneAnnuncio, .categoriaAnnuncio, .comuneAnnuncio, .provinciaAnnuncio {
+    display: inline-block;
+    width: 25%;
+    margin: 0px;
+    line-height: 25px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    margin-right: 10px;
+/ / border-right : 1 px dotted blue;
+}
+
+.provinciaAnnuncio {
+    width: 5%;
+    padding-right: 0;
+}
+
+.comuneAnnuncio {
+    width: 24%;
+    padding-right: 0;
+}
+
+.descrizioneAnnuncio {
+    width: 40%
+}
