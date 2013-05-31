@@ -1,6 +1,8 @@
 package src;
 
 import com.google.gson.Gson;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.sql.*;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -97,14 +99,16 @@ public class DatabaseHandler {
             risultatoQuery = stm.executeQuery("SELECT * FROM categoria ORDER BY nome_cat ASC;");
             risultatoQuery.last();
             int numCat = risultatoQuery.getRow();
-            categorie = new Categoria[numCat];
+            categorie = new Categoria[numCat-1];//-1 perchè la categoria 100 non la invierò al client
             risultatoQuery.beforeFirst();
             while (risultatoQuery.next()) {
+                if (risultatoQuery.getInt("id_categoria")!=100){//non voglio che sia possibile segliere la categoria "senza Categoria"
                 categorie[i++] = new Categoria(risultatoQuery.getInt("id_categoria"), risultatoQuery.getString("nome_cat"));
+             }
             }
             stm.close();
             risultatoQuery.close();
-        } catch (SQLException ex) {
+            } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new Gson().toJson(categorie);
@@ -207,19 +211,19 @@ public class DatabaseHandler {
         return esito;
     }
 
-    String cercaAnnunci(String creatore, String provincia, String comune, int categoria) {
+    String cercaAnnunci(String creatore, String provincia, String comune, int categoria, boolean all) {
         Annuncio tmp = new Annuncio();
         int nParamtro = 0;
         int errore = 0;
         ArrayList<Annuncio> annunci = new ArrayList<Annuncio>();
         String query = "SELECT id_annuncio FROM annuncio JOIN utente ON creatore=username WHERE username=username ";
-        if (creatore != null && creatore!="") {
+        if (creatore != null && creatore != "") {
             query += "AND creatore='" + creatore + "' ";
         }
-        if (provincia != null && provincia!="") {
+        if (provincia != null && provincia != "") {
             query += "AND provincia='" + provincia + "' ";
         }
-        if (comune != null && comune!="") {
+        if (comune != null && comune != "") {
             query += "AND citta='" + comune + "' ";
         }
         if (categoria != -1) {
@@ -230,22 +234,71 @@ public class DatabaseHandler {
             risultatoQuery = stm.executeQuery(query);
             while (risultatoQuery.next()) {
                 Annuncio an = new SearchAnnuncio(conn).byId(risultatoQuery.getInt("id_annuncio"));
-                if (an.getCodiceErrore() == 0 && !an.isRichiesto()) {
+                if (an.getCodiceErrore() == 0 && (!an.isRichiesto() || all)) {
                     annunci.add(an);
                 }
             }
         } catch (SQLException ex) {
             annunci.clear();
-           Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             if (annunci.isEmpty()) {
                 tmp.setCodiceErrore(-10);
-                 annunci.add(tmp);
+                annunci.add(tmp);
             }
-           
         }
-
         return new Gson().toJson(annunci);
     }
 
+    boolean eliminaCategoria(int id_categoria) {
+        boolean esito = true;
+        try {
+            stm = conn.createStatement();
+            esito = (stm.executeUpdate("DELETE FROM categoria WHERE id_categoria=" + id_categoria + ";")>0) ? true : false;
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+            esito = false;
+        }
+        return esito;
+    }
+
+    boolean modificaCategoria(int id_categoria, String nuovoNome) {
+        boolean esito = true;
+        try {
+            pstm = conn.prepareStatement("UPDATE categoria SET nome_cat=? WHERE id_categoria=?");
+            pstm.setString(1,nuovoNome);
+            pstm.setInt(2, id_categoria);
+            esito = (pstm.executeUpdate() > 0) ? true : false;
+            pstm.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+            esito = false;
+        }
+        return esito;
+    }
+
+    String getUtenti() {
+        ArrayList<String> listaUtenti = new ArrayList<String>();
+        try {
+            stm=conn.createStatement();
+            risultatoQuery=stm.executeQuery("SELECT username FROM utente;");
+            while (risultatoQuery.next())
+                listaUtenti.add(risultatoQuery.getString("username"));
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new Gson().toJson(listaUtenti);
+    }
+    
+       boolean eliminaUtente(String username) {
+        boolean esito = true;
+        try {
+            stm = conn.createStatement();
+            esito = (stm.executeUpdate("DELETE FROM utente WHERE username=" + username + ";")>0) ? true : false;
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+            esito = false;
+        }
+        return esito;
+    }
 }

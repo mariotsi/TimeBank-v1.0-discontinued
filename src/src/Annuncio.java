@@ -37,18 +37,21 @@ public class Annuncio {
         this.id_categoria = id_categoria;
         this.nome_cat = nome_cat;
         this.codiceErrore = codiceErrore;
-        this.provincia=provincia;
-        this.nomeComune=nomeComune;
+        this.provincia = provincia;
+        this.nomeComune = nomeComune;
     }
-    
-    Annuncio (){}
+
+    Annuncio() {
+    }
 
     public int getCodiceErrore() {
         return codiceErrore;
     }
+
     public void setCodiceErrore(int codiceErrore) {
         this.codiceErrore = codiceErrore;
-    }    
+    }
+
     public boolean isRichiesto() {
         return richiesto;
     }

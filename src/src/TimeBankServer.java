@@ -45,8 +45,22 @@ public class TimeBankServer {
     public int richiediAnnuncio(int id_annuncio, String creatore, String richiedente) {
         return db.richiediAnnuncio(id_annuncio, creatore, richiedente);
     }
-    
-    public String cercaAnnunci(String creatore, String provincia, String comune, int categoria){
-        return db.cercaAnnunci(creatore, provincia, comune, categoria);    
+
+    public String cercaAnnunci(String creatore, String provincia, String comune, int categoria, boolean all) {
+        return db.cercaAnnunci(creatore, provincia, comune, categoria, all);
+    }
+
+    public boolean eliminaCategoria(int id_categoria) {
+        return db.eliminaCategoria(id_categoria);
+    }
+
+    public boolean modificaCategoria(int id_categoria, String nuovoNome) {
+        return db.modificaCategoria(id_categoria, nuovoNome);
+    }
+    public String getUtenti(){
+        return db.getUtenti();
+    }
+    public boolean eliminaUtente(String username){
+        return db.eliminaUtente(username);
     }
 }
