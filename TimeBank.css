@@ -279,6 +279,47 @@ select {
     overflow: hidden;
 }
 
+#corpoAdmin {
+    width: 810px;
+    margin: 0px auto;
+    background: #222222;
+    padding: 25px;
+    overflow: hidden;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+#adminSX {
+    display: inline-block;
+    float: left;
+    width: 50%;
+
+}
+
+#adminDX {
+    display: inline-block;
+    float: right;
+    width: 50%;
+
+}
+
+#innerAdminSX {
+    border: 1px dashed white;
+    height: 80px;
+    padding-top: 10px;
+    width: 100%;
+}
+
+#innerAdminDX {
+    border: 1px dashed white;
+    width: 100%;
+    height: 80px;
+    padding-top: 10px;
+    border-left: none;
+}
+
 .descrizioneAnnuncio, .categoriaAnnuncio, .comuneAnnuncio, .provinciaAnnuncio {
     display: inline-block;
     width: 25%;

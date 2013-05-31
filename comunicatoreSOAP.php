@@ -45,7 +45,7 @@ switch ($_POST['ACTION']) {
         echo $result->return;
         break;
     case 7:
-        $result = $server->cercaAnnunci(array('creatore' => $_POST['CREATORE'], 'provincia' => $_POST['PROVINCIA'], 'comune' => $_POST['COMUNE'], 'categoria' => $_POST['CATEGORIA']));
+        $result = $server->cercaAnnunci(array('creatore' => $_POST['CREATORE'], 'provincia' => $_POST['PROVINCIA'], 'comune' => $_POST['COMUNE'], 'categoria' => $_POST['CATEGORIA'], 'all' => $_POST['ALL']));
         $result = json_decode($result->return, true);
         // print_r($result[0]["nomeComune"]);
         if ($result[0]["codiceErrore"] != -10) { //Se ci sono annunci
@@ -57,12 +57,25 @@ switch ($_POST['ACTION']) {
         } else
             echo "<br /><div class=\"erroriCercaAnnunci\">Non ci sono annunci</div>";
         break;
+    case 8:
+        $result = $server->modificaCategoria(array('id_categoria' => $_POST['ID_CATEGORIA'], 'nuovoNome' => $_POST['NUOVONOME']));
+        echo $result->return;
+        break;
+    case 9:
+        $result = $server->eliminaCategoria(array('id_categoria' => $_POST['ID_CATEGORIA']));
+        echo $result->return;
+        break;
+    case 10:
+        $result = $server->eliminaCategoria(array('id_categoria' => $_POST['ID_CATEGORIA']));
+        echo $result->return;
+        break;
+    case 11:
+        $result = $server->eliminaUtente(array('username' => $_POST['username']));
+        echo $result->return;
+        break;
 
-}
 
-
-
-
+}//chiusura switch
 
 
 ?>

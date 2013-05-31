@@ -381,7 +381,7 @@ function arrotondaMinuti(ora) {
         return 45;
 }
 
-function caricaAnnunci() {
+function caricaAnnunci(all) {
 
 
     if ($('#comune').val() == "Seleziona prima una provincia")
@@ -404,7 +404,8 @@ function caricaAnnunci() {
             CREATORE: $('#creatore').val(),
             PROVINCIA: $('#provincia').val(),
             COMUNE: comune,
-            CATEGORIA: categoria
+            CATEGORIA: categoria,
+            ALL: all //asking for all or only requested
         }),
         dataType: "html",
         //async: false,
@@ -414,5 +415,63 @@ function caricaAnnunci() {
         }
     });
 }
+function modificaCategoria() {
+    vecchioNome = $('#categoria option:selected').text();
+    var nuovoNome = prompt("Inserisci il nuovo nome della categoria", vecchioNome);
+    if (nuovoNome != null && nuovoNome != vecchioNome && nuovoNome != "") {
+        $.ajax({
+            type: "POST",
+            url: "comunicatoreSOAP.php",
+            data: ({
+                ACTION: "8",
+                ID_CATEGORIA: $('#categoria').val(),
+                NUOVONOME: nuovoNome
+            }),
+            dataType: "html",
+            //async: false,
+            success: function (risultato) {
+                window.location.reload();
+            }
+        });
+    }
+}
+
+function eliminaCategoria() {
+    if (confirm("Sei sicuro di voler eliminare la categoria \"" + $('#categoria option:selected').text() + "\"?")) {
+        $.ajax({
+            type: "POST",
+            url: "comunicatoreSOAP.php",
+            data: ({
+                ACTION: "9",
+                ID_CATEGORIA: $('#categoria').val()
+            }),
+            dataType: "html",
+            //async: false,
+            success: function (risultato) {
+                window.location.reload();
+            }
+        });
+    }
+}
+
+
+function eliminaUtente() {
+    if (confirm("Sei sicuro di voler eliminare l'utente \"" + $('#utente').val() + "\"?")) {
+        $.ajax({
+            type: "POST",
+            url: "comunicatoreSOAP.php",
+            data: ({
+                ACTION: "11",
+                USERNAME: $('#utente').val()
+            }),
+            dataType: "html",
+            //async: false,
+            success: function (risultato) {
+                window.location.reload();
+            }
+        });
+    }
+}
+
 
 

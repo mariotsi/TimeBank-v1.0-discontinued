@@ -75,7 +75,7 @@
     </form>
 </div>
 <script type="text/javascript">
-    caricaAnnunci();
+    caricaAnnunci(0);
 </script>
 </body>
 </html>
