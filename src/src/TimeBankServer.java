@@ -57,6 +57,10 @@ public class TimeBankServer {
     public boolean modificaCategoria(int id_categoria, String nuovoNome) {
         return db.modificaCategoria(id_categoria, nuovoNome);
     }
+    
+    public boolean isAdmin(String username){
+        return db.isAdmin(username);
+    }
     public String getUtenti(){
         return db.getUtenti();
     }

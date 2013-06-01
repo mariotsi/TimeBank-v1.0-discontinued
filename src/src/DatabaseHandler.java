@@ -276,6 +276,18 @@ public class DatabaseHandler {
         }
         return esito;
     }
+    boolean isAdmin(String username){
+        boolean admin=false;
+        try {
+            stm=conn.createStatement();
+            risultatoQuery=stm.executeQuery("SELECT admin FROM utente WHERE username='"+username+"';");
+            risultatoQuery.next();
+            admin=risultatoQuery.getBoolean("admin");
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return admin;
+    }
 
     String getUtenti() {
         ArrayList<String> listaUtenti = new ArrayList<String>();
@@ -294,7 +306,7 @@ public class DatabaseHandler {
         boolean esito = true;
         try {
             stm = conn.createStatement();
-            esito = (stm.executeUpdate("DELETE FROM utente WHERE username=" + username + ";")>0) ? true : false;
+            esito = (stm.executeUpdate("DELETE FROM utente WHERE username='" + username + "';")>0) ? true : false;
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
             esito = false;
