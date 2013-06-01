@@ -1,5 +1,4 @@
 <?php include_once "controlloaccessi.php" ?>
-<?php include_once "SOAP.php" ?>
 <?php include_once "logout.php"; ?>
 <?php global $server;
 

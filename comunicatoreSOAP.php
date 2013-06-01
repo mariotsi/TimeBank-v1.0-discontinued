@@ -70,7 +70,7 @@ switch ($_POST['ACTION']) {
         echo $result->return;
         break;
     case 11:
-        $result = $server->eliminaUtente(array('username' => $_POST['username']));
+        $result = $server->eliminaUtente(array('username' => $_POST['USERNAME']));
         echo $result->return;
         break;
 

@@ -1,10 +1,6 @@
 <?php
 include_once "controlloaccessi.php";
-include_once "SOAP.php";
 include_once "logout.php";
-global $server;
-
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -29,6 +25,11 @@ global $server;
         </div>
     </div>
     <div id="corpoAdmin">
+        <?php
+        if (!$isAdmin) {
+            echo "<div class=\"erroriCercaAnnunci\">Pagina riservata ai soli Amministratori!</div>";
+            exit;
+        }  ?>
         <div id="adminSX">
             <div style="text-align: center"><h4 style="top: 0px;">Categorie</h4></div>
             <div id="innerAdminSX" style="margin-right:5px;">
