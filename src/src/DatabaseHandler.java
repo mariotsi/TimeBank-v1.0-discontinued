@@ -1,16 +1,12 @@
 package src;
 
 import com.google.gson.Gson;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 import java.sql.*;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 public class DatabaseHandler {
@@ -99,16 +95,16 @@ public class DatabaseHandler {
             risultatoQuery = stm.executeQuery("SELECT * FROM categoria ORDER BY nome_cat ASC;");
             risultatoQuery.last();
             int numCat = risultatoQuery.getRow();
-            categorie = new Categoria[numCat-1];//-1 perchè la categoria 100 non la invierò al client
+            categorie = new Categoria[numCat - 1];//-1 perchè la categoria 100 non la invierò al client
             risultatoQuery.beforeFirst();
             while (risultatoQuery.next()) {
-                if (risultatoQuery.getInt("id_categoria")!=100){//non voglio che sia possibile segliere la categoria "senza Categoria"
-                categorie[i++] = new Categoria(risultatoQuery.getInt("id_categoria"), risultatoQuery.getString("nome_cat"));
-             }
+                if (risultatoQuery.getInt("id_categoria") != 100) {//non voglio che sia possibile segliere la categoria "senza Categoria"
+                    categorie[i++] = new Categoria(risultatoQuery.getInt("id_categoria"), risultatoQuery.getString("nome_cat"));
+                }
             }
             stm.close();
             risultatoQuery.close();
-            } catch (SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new Gson().toJson(categorie);
@@ -254,7 +250,7 @@ public class DatabaseHandler {
         boolean esito = true;
         try {
             stm = conn.createStatement();
-            esito = (stm.executeUpdate("DELETE FROM categoria WHERE id_categoria=" + id_categoria + ";")>0) ? true : false;
+            esito = (stm.executeUpdate("DELETE FROM categoria WHERE id_categoria=" + id_categoria + ";") > 0) ? true : false;
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
             esito = false;
@@ -266,7 +262,7 @@ public class DatabaseHandler {
         boolean esito = true;
         try {
             pstm = conn.prepareStatement("UPDATE categoria SET nome_cat=? WHERE id_categoria=?");
-            pstm.setString(1,nuovoNome);
+            pstm.setString(1, nuovoNome);
             pstm.setInt(2, id_categoria);
             esito = (pstm.executeUpdate() > 0) ? true : false;
             pstm.close();
@@ -276,13 +272,14 @@ public class DatabaseHandler {
         }
         return esito;
     }
-    boolean isAdmin(String username){
-        boolean admin=false;
+
+    boolean isAdmin(String username) {
+        boolean admin = false;
         try {
-            stm=conn.createStatement();
-            risultatoQuery=stm.executeQuery("SELECT admin FROM utente WHERE username='"+username+"';");
+            stm = conn.createStatement();
+            risultatoQuery = stm.executeQuery("SELECT admin FROM utente WHERE username='" + username + "';");
             risultatoQuery.next();
-            admin=risultatoQuery.getBoolean("admin");
+            admin = risultatoQuery.getBoolean("admin");
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -292,24 +289,60 @@ public class DatabaseHandler {
     String getUtenti() {
         ArrayList<String> listaUtenti = new ArrayList<String>();
         try {
-            stm=conn.createStatement();
-            risultatoQuery=stm.executeQuery("SELECT username FROM utente;");
-            while (risultatoQuery.next())
+            stm = conn.createStatement();
+            risultatoQuery = stm.executeQuery("SELECT username FROM utente ORDER BY username ASC;");
+            while (risultatoQuery.next()) {
                 listaUtenti.add(risultatoQuery.getString("username"));
+            }
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new Gson().toJson(listaUtenti);
     }
-    
-       boolean eliminaUtente(String username) {
+
+    boolean eliminaUtente(String username) {
         boolean esito = true;
         try {
             stm = conn.createStatement();
-            esito = (stm.executeUpdate("DELETE FROM utente WHERE username='" + username + "';")>0) ? true : false;
+            esito = (stm.executeUpdate("DELETE FROM utente WHERE username='" + username + "';") > 0) ? true : false;
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
             esito = false;
+        }
+        return esito;
+    }
+
+    String getUtente(String username) {
+        return new Gson().toJson(new SearchUtente(conn).byId(username));
+    }
+
+    int modificaUtente(String username, String password, String email, String indirizzo, String cap, String citta, String provincia, boolean admin, String oldUsername) {
+       esito=-1;
+        try {
+            String query = "UPDATE utente SET username=?, email=?, indirizzo=?, cap=?, citta=?, provincia=?, admin=? WHERE username=? ";
+            pstm = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            pstm.setString(1, username);
+            pstm.setString(2, email);
+            pstm.setString(3, indirizzo);
+            pstm.setString(4, cap);
+            pstm.setString(5, citta); //Codice ISTAT
+            pstm.setString(6, provincia);
+            pstm.setBoolean(7, admin);
+            pstm.setString(8, oldUsername);
+            esito = (pstm.executeUpdate() > 0) ? 0 : -2;
+            pstm.close();
+            if (password!=null && !password.equals("")){
+                pstm=conn.prepareStatement("UPDATE utente SET password=? WHERE username=?");                
+                pstm.setString(1, BCrypt.hashpw(password, BCrypt.gensalt()));
+                pstm.setString(2, username);//uso il nuovo username
+                esito = (pstm.executeUpdate() > 0) ? 0 : -2;    
+                pstm.close();
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+            esito = -2;
+            System.err.println("Errore generico: " + ex);
         }
         return esito;
     }

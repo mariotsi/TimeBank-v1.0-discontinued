@@ -4,8 +4,6 @@
  */
 package src;
 
-import com.google.gson.Gson;
-
 /**
  *
  * @author Simone
@@ -61,10 +59,19 @@ public class TimeBankServer {
     public boolean isAdmin(String username){
         return db.isAdmin(username);
     }
+    
     public String getUtenti(){
         return db.getUtenti();
     }
+    
+    public String getUtente(String username){
+        return db.getUtente(username);
+    }
+    
     public boolean eliminaUtente(String username){
         return db.eliminaUtente(username);
+    }
+    public int modificaUtente(String username, String password, String email, String indirizzo, String cap, String citta, String provincia, boolean admin, String oldUsername) {
+        return db.modificaUtente(username, password, email, indirizzo, cap, citta, provincia, admin, oldUsername);
     }
 }
