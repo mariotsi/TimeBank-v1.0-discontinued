@@ -25,8 +25,6 @@ if (!isset($username)) {
         <link href="TimeBank.css" rel="stylesheet" type="text/css">
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
         <script type="text/javascript" src="TimeBank.js"></script>
-
-
     </head>
     <body>
     <div id="container">
@@ -36,11 +34,7 @@ if (!isset($username)) {
                 <h3>Time Bank</h3>
 
                 <div class="clessidra"></div>
-
-
             </div>
-
-
         </div>
         <div id="corpo">
             <form id="login" method="POST" action="<?php echo $_SERVER['PHP_SELF'];

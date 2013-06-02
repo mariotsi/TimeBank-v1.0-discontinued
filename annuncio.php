@@ -8,7 +8,7 @@ and open the template in the editor.
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Inserimento nuovo annuncio</title>
+    <title>Nuovo Annuncio - Time Bank</title>
     <link href="TimeBank.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="TimeBank.js"></script>
@@ -73,16 +73,16 @@ and open the template in the editor.
     */
         print_r(date('Y-m-d', strtotime("+1 hours")) . "T" . date('H', strtotime("+1 hours")) . ":00"); ?>"
                max="<?php print_r(date('Y-m-d', strtotime("+2 months")) . "T" . date('H', strtotime("+1 hours")) . ":00"); ?>"
-               step="900" 
-              <?php  
-              $dateForm1 = (date('Y-m-d', strtotime("+1 hours")) . " " . date('H', strtotime("+1 hours")) . ":00");
-              $dateForm2 = (date('Y-m-d', strtotime("+1 hours")) . "T" . date('H', strtotime("+1 hours")) . ":00");
-              if (isset($_SERVER['HTTP_USER_AGENT']) && preg_match('(MSIE|Firefox)', $_SERVER['HTTP_USER_AGENT'])) {
-                        echo ' onchange="checkData(\''.$dateForm1.'\')" value="'.$dateForm1.'"';
-              }else{
-                  echo 'value="'.$dateForm2.'"';
-              }
-               ?>/>
+               step="900"
+            <?php
+            $dateForm1 = (date('Y-m-d', strtotime("+1 hours")) . " " . date('H', strtotime("+1 hours")) . ":00");
+            $dateForm2 = (date('Y-m-d', strtotime("+1 hours")) . "T" . date('H', strtotime("+1 hours")) . ":00");
+            if (isset($_SERVER['HTTP_USER_AGENT']) && preg_match('(MSIE|Firefox)', $_SERVER['HTTP_USER_AGENT'])) {
+                echo ' onchange="checkData(\'' . $dateForm1 . '\')" value="' . $dateForm1 . '"';
+            } else {
+                echo 'value="' . $dateForm2 . '"';
+            }
+            ?>/>
         <input id="inviaAnnuncio" type="submit" name="InviaAnnuncio" value="Crea Annuncio"/>
         <span class="errori" id="errore"></span>
     </form>

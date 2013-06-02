@@ -50,6 +50,8 @@ else if ($annuncio['codiceErrore'] == -2)
             class="dati"><?php if (!isset($errore)) echo $annuncio['data_inserimento']; ?></span>
         <span class="etichetta">Data disponibilità:</span><span
             class="dati"><?php if (!isset($errore)) echo $annuncio['data_annuncio']; ?></span>
+        <span class="etichetta">Categoria:</span><span
+            class="dati"><?php if (!isset($errore)) echo $annuncio['nome_cat']; ?></span>
         <span class="etichetta">Descrizione:</span><span class="dati"
                                                          id="descrizione"><?php if (!isset($errore)) echo $annuncio['descrizione']; ?></span>
         <?php if ($annuncio['richiesto']) {

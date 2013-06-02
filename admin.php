@@ -6,7 +6,7 @@ include_once "logout.php";
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>TimeBank</title>
+    <title>Pannello Amministrazione - TimeBank</title>
     <link href="TimeBank.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="TimeBank.js"></script>
@@ -72,7 +72,7 @@ include_once "logout.php";
                     }
                     ?>
                 </select>
-                <input type="submit" style="width: 200px;" onclick="modificaUtente()" value="Modifica"/>
+                <input type="submit" style="width: 200px;" onclick="goModificaUtente()" value="Modifica"/>
                 <input type="submit" style="width: 200px;" onclick="eliminaUtente()" value="Elimina"/>
 
 

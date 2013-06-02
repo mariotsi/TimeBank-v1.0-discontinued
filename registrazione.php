@@ -24,6 +24,7 @@
 
     </div>
     <div id="corpo">
+
         <form id="registrazione" onsubmit=" return inserisciUtente()">
 
             <label for="username">Username: </label>

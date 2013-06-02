@@ -1,8 +1,5 @@
 function inserisciUtente() {
-
-
-    if (controllaCompilazioneCampi()) {
-
+    if (controllaCompilazioneCampi(false)) {
         $.ajax({
             type: "POST",
             url: "comunicatoreSOAP.php",
@@ -15,7 +12,6 @@ function inserisciUtente() {
                 CAP: $('#cap').val(),
                 PROVINCIA: $('#provincia').val(),
                 COMUNE: $('#comune').val()
-
             }),
             dataType: "html",
             async: false,
@@ -23,7 +19,6 @@ function inserisciUtente() {
                 alert("Utente correttamente Registrato");
                 return true;
             }
-
         });
     } else {
         alert("Compila tutti i campi");
@@ -195,10 +190,10 @@ function isEmail(email) {
     return regex.test(email);
 }
 
-function controllaCompilazioneCampi() {
+function controllaCompilazioneCampi(skipPassword) {
 
     if ($('#username').val() != '') {
-        if ($('#password').val() != '') {
+        if ($('#password').val() != '' || skipPassword) {
             if ($('#email').val() != '') {
                 if ($('#indirizzo').val() != '') {
                     if ($('#cap').val() != '' && $('#cap').val().length == 5) {
@@ -415,6 +410,21 @@ function caricaAnnunci(all) {
         }
     });
 }
+
+function toggleCambiaPassword() {
+    $('input[type=password]').prop('disabled', !$('input[type=password]').is(":disabled"));   //do alla proprietà disabled il negato del valore attuale
+}
+
+function toggleMakeAdmin() {
+    if ($('#makeAdmin').is(":checked")) {
+        if (confirm("Sei sicuro di voler promuovere " + $('#username').val() + " ad amministratore?")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
 function modificaCategoria() {
     vecchioNome = $('#categoria option:selected').text();
     var nuovoNome = prompt("Inserisci il nuovo nome della categoria", vecchioNome);
@@ -454,6 +464,9 @@ function eliminaCategoria() {
     }
 }
 
+function goModificaUtente() {
+    window.location = "modificautente.php?utente=" + $('#utente').val();
+}
 
 function eliminaUtente() {
     if (confirm("Sei sicuro di voler eliminare l'utente \"" + $('#utente').val() + "\"?")) {
@@ -473,5 +486,46 @@ function eliminaUtente() {
     }
 }
 
+function modificaUtente() {
+    var bo = $('#makeAdmin').is(':checked') ? 1 : 0;
 
+    if (controllaCompilazioneCampi($('input[type=password]').is(":disabled"))) {  //se i campi password sono disabilitati salta il controllo password!
+        if ($('input[type=password]').is(":disabled")) {
+            password = "";
+        }
+        else {
+            password = $('#password').val();
+        }
+        $.ajax({
+            type: "POST",
+            url: "comunicatoreSOAP.php",
+            data: ({
+                ACTION: "12",
+                USERNAME: $('#username').val(),
+                PASSWORD: password,
+                EMAIL: $('#email').val(),
+                INDIRIZZO: $('#indirizzo').val(),
+                CAP: $('#cap').val(),
+                PROVINCIA: $('#provincia').val(),
+                COMUNE: $('#comune').val(),
+                ADMIN: bo,
+                OLDUSERNAME: getURLParameter('utente')
+            }),
+            dataType: "html",
+            async: false,
+            success: function (risultato) {
+                if (risultato == -2) {
+                    alert("Utente non trovato");
+                    return false;
+                }
+                alert("Utente correttamente modificato");
+                window.location = "?utente=" + $('#username').val();
+                return true;
+            }
+        });
+    } else {
+        alert("Compila tutti i campi");
+        return false;
+    }
+}
 

@@ -119,6 +119,10 @@ input, select, .dati {
     vertical-align: middle;
 }
 
+input[type="password"]:disabled {
+    background: #adadad;
+}
+
 .dati {
     height: 30px;
     LINE-HEIGHT: 30px;

@@ -73,6 +73,10 @@ switch ($_POST['ACTION']) {
         $result = $server->eliminaUtente(array('username' => $_POST['USERNAME']));
         echo $result->return;
         break;
+    case 12:
+        $result = $server->modificaUtente(array('username' => $_POST['USERNAME'], 'password' => $_POST['PASSWORD'], 'email' => $_POST['EMAIL'], 'indirizzo' => $_POST['INDIRIZZO'], 'cap' => $_POST['CAP'], 'citta' => $_POST['COMUNE'], 'provincia' => $_POST['PROVINCIA'], 'admin' => $_POST['ADMIN'], 'oldUsername' => $_POST['OLDUSERNAME']));
+        print_r($result->return);
+        break;
 
 
 }//chiusura switch
