@@ -8,7 +8,9 @@ CREATE TABLE categoria (
 id_categoria SERIAL PRIMARY KEY,
 nome_cat VARCHAR (50)
 );
+INSERT INTO categoria VALUES ( 100,'Senza Categoria');
 COPY categoria(nome_cat) FROM 'C:/categorieLavoro.txt';
+
 
 CREATE TABLE comune (
 codice_istat CHAR(6) PRIMARY KEY,
@@ -47,6 +49,8 @@ provincia CHAR(2) REFERENCES province(provincia_list),
 admin BOOLEAN DEFAULT FALSE
 );
 
+COPY utente FROM 'C:/utenti.txt';
+
 SET DATESTYLE TO European;
 
 CREATE TABLE annuncio (
@@ -55,7 +59,32 @@ data_inserimento VARCHAR(20),
 data_annuncio VARCHAR(20),
 richiesto BOOLEAN DEFAULT FALSE,
 descrizione TEXT,
-richiedente VARCHAR(50) REFERENCES utente(username) DEFAULT NULL,
-creatore VARCHAR(50) REFERENCES utente(username), /*In Java controllare che il richiedente non sia anche il cratore */
-categoria INTEGER REFERENCES categoria(id_categoria)
+richiedente VARCHAR(50) default NULL REFERENCES utente(username) on DELETE SET DEFAULT ON UPDATE SET DEFAULT,
+creatore VARCHAR(50) REFERENCES utente(username) ON DELETE CASCADE ON UPDATE CASCADE, /*In Java controllare che il richiedente non sia anche il cratore */
+categoria INTEGER default 100 REFERENCES categoria(id_categoria)  ON DELETE SET default /*100 è l'id della categoria "Senza Categoria", serve quando una categoria viene eliminata*/
 );
+
+COPY annuncio FROM 'C:/annunci.txt';
+
+/*Questo trigger risolve il problema che si creava quando si cancella un utente che ha richiesto almeno un annuncio. In particolare il 
+corrispondente campo "richiedente" su annuncio viene correttametne impostato a NULL grazie alla clausola ON DELETE SET DEFAULT 
+ma il campo "richiesto" rimane sempre a TRUE.
+
+Ora invece ogni volta che il "richiedente" viene impostato a NULL viene anche impostato a false il campo "richiesto"*/
+CREATE OR REPLACE FUNCTION nonRichiesto() RETURNS TRIGGER AS
+  $BODY$
+	DECLARE 
+		BEGIN		
+		IF NEW.richiedente IS NULL THEN
+			NEW.richiesto:=false;
+		END IF;
+		RETURN NEW;
+	END;
+	$BODY$
+	LANGUAGE PLPGSQL;
+
+	CREATE TRIGGER nonRichiesto
+	BEFORE UPDATE
+	ON annuncio
+	FOR EACH ROW
+	EXECUTE PROCEDURE nonRichiesto();
