@@ -3,12 +3,14 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<?php include_once "controlloaccessi.php" ?>
+<?php include_once "controlloaccessi.php";
+include_once "logout.php";
+?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Nuovo Annuncio - Time Bank</title>
+    <title>Modifica Annuncio - Time Bank</title>
     <link href="TimeBank.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="TimeBank.js"></script>
@@ -25,15 +27,34 @@ and open the template in the editor.
 
             <div class="clessidra"></div>
             <br/>
-            <h4>Inserisci Nuovo Annuncio</h4>
+            <h4>Modifica Annuncio</h4>
         </div>
     </div>
 </div>
 <div id="corpo">
-    <form id="nuovoAnnuncio" onsubmit="return insAnnuncio()">
-
+    <?php
+    if (!$isAdmin) {
+        echo "<div class=\"erroriCercaAnnunci\">Pagina riservata ai soli Amministratori!</div>";
+        exit;
+    }
+    if (!isset($_GET['id_annuncio'])) {
+        echo "<div class=\"erroriCercaAnnunci\">Non è stato fornito nessun annuncio da modificare</div>";
+        exit;
+    }
+    $result = $server->getAnnuncio(array('id_annuncio' => $_GET['id_annuncio']));
+    $result = json_decode($result->return, true);
+    global $result;
+    if ($result['codiceErrore'] == -2) {
+        echo "<div class=\"erroriCercaAnnunci\">Non è stato trovato nessun annuncio da modificare</div>";
+        exit;
+    }
+    ?>
+    <form id="nuovoAnnuncio">
+        <span class="etichetta">Creatore:</span><span
+            class="dati" onclick="alert('Non si può modificare il creatore');"><?= $result['creatore'] ?> (Non modificabile)</span>
         <label for="testoAnnuncio">Testo dell'annuncio:</label>
-        <textarea id="testoAnnuncio" type="text" maxlength="1000"></textarea>
+        <textarea id="testoAnnuncio" type="text" maxlength="1000"
+                  style="width: 322px"><?= $result["descrizione"] ?></textarea>
 
         <label for="categoria">Categoria:</label>
         <select id="categoria">
@@ -41,10 +62,13 @@ and open the template in the editor.
             <?php
             try {
                 $server = new SoapClient('http://127.0.0.1:8080/axis2/services/TimeBankServer?wsdl', array('cache_wsdl' => WSDL_CACHE_NONE));
-                $result = $server->getCategorie();
-                $categorie = json_decode($result->return, true);
+                $result2 = $server->getCategorie();
+                $categorie = json_decode($result2->return, true);
                 foreach ($categorie as $temp) {
-                    echo "<option value=\"" . $temp["id_categoria"] . "\">" . $temp["nome_cat"] . "</option>";
+                    if ($temp["id_categoria"] == $result["id_categoria"])
+                        echo "<option value=\"" . $temp["id_categoria"] . "\" selected>" . $temp["nome_cat"] . "</option>";
+                    else
+                        echo "<option value=\"" . $temp["id_categoria"] . "\">" . $temp["nome_cat"] . "</option>";
                 }
             } catch (Exception $e) {
                 echo "<h2>Exception Error! " . $e->getMessage() . "</h2>";
@@ -52,7 +76,7 @@ and open the template in the editor.
             ?>
         </select>
         <label for="calendario">Quando:</label>
-        <input type="datetime-local" id="calendario" min="<?php
+        <input style="width: 322px" type="datetime-local" id="calendario" min="<?php
         $date = getdate();
         if ($date['mon'] < 10) {
             $date['mon'] = "0" . $date['mon'];
@@ -74,6 +98,7 @@ and open the template in the editor.
         print_r(date('Y-m-d', strtotime("+1 hours")) . "T" . date('H', strtotime("+1 hours")) . ":00"); ?>"
                max="<?php print_r(date('Y-m-d', strtotime("+2 months")) . "T" . date('H', strtotime("+1 hours")) . ":00"); ?>"
                step="900"
+               value="<?= str_replace(" ", "T", $result["data_annuncio"]) ?>"
             <?php
             $dateForm1 = (date('Y-m-d', strtotime("+1 hours")) . " " . date('H', strtotime("+1 hours")) . ":00");
             $dateForm2 = (date('Y-m-d', strtotime("+1 hours")) . "T" . date('H', strtotime("+1 hours")) . ":00");
@@ -83,7 +108,32 @@ and open the template in the editor.
                 echo 'value="' . $dateForm2 . '"';
             }
             ?>/>
-        <input id="inviaAnnuncio" type="submit" name="InviaAnnuncio" value="Crea Annuncio"/>
+        <label for="richiedente">Richiedente:</label>
+        <select id="richiedente" style="color:#dedede">
+            <option value="Non Richiesto" style="color: red">Non Richiesto</option>
+            <?php
+            try {
+                $result3 = $server->getUtenti();
+                $utenti = json_decode($result3->return, true);
+                foreach ($utenti as $temp) {
+                    if ($result['creatore'] != $temp) {
+                        if ($result['richiedente'] == $temp)
+                            echo "<option value=\"" . $temp . "\" selected>" . $temp . "</option>";
+                        else
+                            echo "<option value=\"" . $temp . "\">" . $temp . "</option>";
+                    }
+                }
+            } catch (Exception $e) {
+                echo "<h2>Exception Error! " . $e->getMessage() . "</h2>";
+            }
+            ?>
+        </select>
+        <input id="modificaAnnuncio" type="button" value="Modifica" onclick="modificaAnnuncio1()"/>
+        <input id="eliminaAnnuncio" style="background-color: #BA3A13" type="button" value="Elimina"
+               onclick="eliminaAnnuncio1()"/>
+
+        <div class="clearer"></div>
+
         <span class="errori" id="errore"></span>
     </form>
 </div>

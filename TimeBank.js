@@ -101,7 +101,7 @@ function getURLParameter(name) {
 }
 
 
-function sceltaProvincia() {
+function sceltaProvincia(all) {
     value = $("#provincia").val();
     //$("#comune").focus();
     $.ajax({
@@ -118,7 +118,7 @@ function sceltaProvincia() {
             }
             else {
                 $("#comune").html("<option></option>" + risultato);    //se siamo altrove, in particolare index.php
-                caricaAnnunci();
+                caricaAnnunci(all);
             }
         }
     });
@@ -426,7 +426,7 @@ function toggleMakeAdmin() {
 }
 
 function modificaCategoria() {
-    vecchioNome = $('#categoria option:selected').text();
+    vecchioNome = $('#categoriaAnnuncio option:selected').text();
     var nuovoNome = prompt("Inserisci il nuovo nome della categoria", vecchioNome);
     if (nuovoNome != null && nuovoNome != vecchioNome && nuovoNome != "") {
         $.ajax({
@@ -434,7 +434,7 @@ function modificaCategoria() {
             url: "comunicatoreSOAP.php",
             data: ({
                 ACTION: "8",
-                ID_CATEGORIA: $('#categoria').val(),
+                ID_CATEGORIA: $('#categoriaAnnuncio').val(),
                 NUOVONOME: nuovoNome
             }),
             dataType: "html",
@@ -447,13 +447,13 @@ function modificaCategoria() {
 }
 
 function eliminaCategoria() {
-    if (confirm("Sei sicuro di voler eliminare la categoria \"" + $('#categoria option:selected').text() + "\"?")) {
+    if (confirm("Sei sicuro di voler eliminare la categoria \"" + $('#categoriaAnnuncio option:selected').text() + "\"?")) {
         $.ajax({
             type: "POST",
             url: "comunicatoreSOAP.php",
             data: ({
                 ACTION: "9",
-                ID_CATEGORIA: $('#categoria').val()
+                ID_CATEGORIA: $('#categoriaAnnuncio').val()
             }),
             dataType: "html",
             //async: false,
@@ -528,4 +528,54 @@ function modificaUtente() {
         return false;
     }
 }
+
+function eliminaAnnuncio1() {
+    if (confirm("Sei sicuro di voler eliminare l'annuncio corrente (id=" + getURLParameter('id_annuncio') + ")?")) {
+        $.ajax({
+            type: "POST",
+            url: "comunicatoreSOAP.php",
+            data: ({
+                ACTION: "13",
+                ID_ANNUNCIO: getURLParameter('id_annuncio')
+            }),
+            dataType: "html",
+            async: false,
+            success: function (risultato) {
+                if (risultato) {
+                    alert("Annuncio correttamente eliminato");
+                    window.history.back();
+                } else {
+                    alert("Errore durante l'eliminazione dell'annuncio");
+                }
+            }
+        });
+    }
+}
+
+function modificaAnnuncio1() {
+    $.ajax({
+        type: "POST",
+        url: "comunicatoreSOAP.php",
+        data: ({
+            ACTION: "14",
+            ID_ANNUNCIO: getURLParameter('id_annuncio'),
+            DATA_ANNUNCIO: $('#calendario').val().replace('T', ' '),
+            DESCRIZIONE: $('#testoAnnuncio').val(),
+            RICHIEDENTE: $('#richiedente').val(),
+            ID_CATEGORIA: $('#categoria').val()
+        }),
+        dataType: "html",
+        async: false,
+        success: function (risultato) {
+            if (risultato == -2) {
+                alert("Annuncio non trovato");
+                return false;
+            }
+            alert("Annuncio correttamente modificato");
+            window.location.reload();
+            return true;
+        }
+    });
+}
+
 

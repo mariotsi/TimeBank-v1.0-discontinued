@@ -33,7 +33,7 @@ include_once "logout.php";
         <div id="adminSX">
             <div style="text-align: center"><h4 style="top: 0px;">Categorie</h4></div>
             <div id="innerAdminSX" style="margin-right:5px;">
-                <select id="categoria" style="float: none; margin: 0 auto;width: 400px;">
+                <select id="categoriaAnnuncio" style="float: none; margin: 0 auto;width: 400px;">
                     <?php
                     try {
                         //$server = new SoapClient('http://127.0.0.1:8080/axis2/services/TimeBankServer?wsdl', array('cache_wsdl' => WSDL_CACHE_NONE));
@@ -78,6 +78,65 @@ include_once "logout.php";
 
             </div>
         </div>
+        <div style="text-align: center"><h4 style="top: 0px;">Annunci</h4></div>
+        <div style="border: 1px dashed white;">
+            <div class="listaAnnuncio">
+            </div>
+            <span style="display: block; width : 100%; text-align: center">Annuncio non richiesto|<span
+                    style="color:#D9AA55">Annuncio richiesto</span>  </span>
 
+            <form id="registrazione" sytle="margin-top: 50px">
+                <h4 style="top: 0px;">Filtra la ricerca</h4>
+                <br/>
 
-    </div>
+                <label for="creatore">Creatore: </label>
+                <input id="creatore" onchange="caricaAnnunci(1)"/>
+
+                <label for="categoria">Categoria:</label>
+                <select id="categoria" onchange="caricaAnnunci(1)">
+                    <option></option>
+                    <?php
+                    try {
+                        $server = new SoapClient('http://127.0.0.1:8080/axis2/services/TimeBankServer?wsdl', array('cache_wsdl' => WSDL_CACHE_NONE));
+                        $result = $server->getCategorie();
+                        $categorie = json_decode($result->return, true);
+                        foreach ($categorie as $temp) {
+                            echo "<option value=\"" . $temp["id_categoria"] . "\">" . $temp["nome_cat"] . "</option>";
+                        }
+                    } catch (Exception $e) {
+                        echo "<h2>Exception Error! " . $e->getMessage() . "</h2>";
+                    }
+                    ?>
+                </select>
+
+                <label for="provincia">Provincia (sigla):</label>
+
+                <select id="provincia" onchange="sceltaProvincia(1)">
+                    <option></option>
+                    <?php
+                    try {
+                        $server = new SoapClient('http://127.0.0.1:8080/axis2/services/TimeBankServer?wsdl');
+                        //$parameters=array('value'=>35);
+                        $result = $server->getProvince();
+                        foreach ($result->return as $temp) {
+                            $temp = "<option>" . $temp . "</option>";
+                            echo $temp;
+                        }
+                    } catch (Exception $e) {
+                        echo "<h2>Exception Error!</h2>";
+                        echo $e->getMessage();
+                    }
+                    ?>
+                </select>
+                <label for="comune">Comune:</label>
+                <select id="comune" onchange="caricaAnnunci(1)">
+                    <option>Seleziona prima una provincia</option>
+                </select>
+            </form>
+
+        </div>
+        <script type="text/javascript">
+            caricaAnnunci(1);
+        </script>
+</body>
+</html>

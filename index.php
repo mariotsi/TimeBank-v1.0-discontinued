@@ -25,15 +25,15 @@
     </div>
     <br/>
 
-    <form id="registrazione" sytle="margin-top: 50px">
+    <form id="registrazione" sytle="margin-top: 50px" Style="border : 1px">
         <h4 style="top: 0px;">Filtra la ricerca</h4>
         <br/>
 
         <label for="creatore">Creatore: </label>
-        <input id="creatore" onchange="caricaAnnunci()"/>
+        <input id="creatore" onchange="caricaAnnunci(0)"/>
 
         <label for="categoria">Categoria:</label>
-        <select id="categoria" onchange="caricaAnnunci()">
+        <select id="categoria" onchange="caricaAnnunci(0)">
             <option></option>
             <?php
             try {
@@ -51,7 +51,7 @@
 
         <label for="provincia">Provincia (sigla):</label>
 
-        <select id="provincia" onchange="sceltaProvincia()">
+        <select id="provincia" onchange="sceltaProvincia(0)">
             <option></option>
             <?php
             try {
@@ -69,7 +69,7 @@
             ?>
         </select>
         <label for="comune">Comune:</label>
-        <select id="comune" onchange="caricaAnnunci()">
+        <select id="comune" onchange="caricaAnnunci(0)">
             <option>Seleziona prima una provincia</option>
         </select>
     </form>
