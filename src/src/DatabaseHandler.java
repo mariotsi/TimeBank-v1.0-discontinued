@@ -317,7 +317,7 @@ public class DatabaseHandler {
     }
 
     int modificaUtente(String username, String password, String email, String indirizzo, String cap, String citta, String provincia, boolean admin, String oldUsername) {
-       esito=-1;
+        esito = -1;
         try {
             String query = "UPDATE utente SET username=?, email=?, indirizzo=?, cap=?, citta=?, provincia=?, admin=? WHERE username=? ";
             pstm = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -331,18 +331,63 @@ public class DatabaseHandler {
             pstm.setString(8, oldUsername);
             esito = (pstm.executeUpdate() > 0) ? 0 : -2;
             pstm.close();
-            if (password!=null && !password.equals("")){
-                pstm=conn.prepareStatement("UPDATE utente SET password=? WHERE username=?");                
+            if (password != null && !password.equals("")) {
+                pstm = conn.prepareStatement("UPDATE utente SET password=? WHERE username=?");
                 pstm.setString(1, BCrypt.hashpw(password, BCrypt.gensalt()));
                 pstm.setString(2, username);//uso il nuovo username
-                esito = (pstm.executeUpdate() > 0) ? 0 : -2;    
+                esito = (pstm.executeUpdate() > 0) ? 0 : -2;
                 pstm.close();
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
             esito = -2;
             System.err.println("Errore generico: " + ex);
+        }
+        return esito;
+    }
+
+    int modificaAnnuncio(int id_annuncio, String data_annuncio, String descrizione, String richiedente, int id_categoria) {
+        esito = -1;
+        try {
+            String query = "UPDATE annuncio SET data_annuncio=?, descrizione=?, categoria=? WHERE id_annuncio=? ";
+            pstm = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            pstm.setString(1, data_annuncio);
+            pstm.setString(2, descrizione);
+            pstm.setInt(3, id_categoria);
+            pstm.setInt(4, id_annuncio);
+            esito = (pstm.executeUpdate() > 0) ? 0 : -2;
+            pstm.close();
+            if (richiedente != null && !richiedente.equals("") && !richiedente.equals("Non Richiesto")) {
+                pstm = conn.prepareStatement("UPDATE annuncio SET richiedente=?, richiesto=true WHERE id_annuncio=?");
+                pstm.setString(1, richiedente);
+                pstm.setInt(2, id_annuncio);
+                esito = (pstm.executeUpdate() > 0) ? 0 : -2;
+                pstm.close();
+            } else if (richiedente != null && richiedente.equals("Non Richiesto")) {
+                pstm = conn.prepareStatement("UPDATE annuncio SET richiedente=?, richiesto=false WHERE id_annuncio=?");
+                pstm.setNull(1, Types.VARCHAR);
+                pstm.setInt(2, id_annuncio);
+                esito = (pstm.executeUpdate() > 0) ? 0 : -2;
+                pstm.close();
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+            esito = -2;
+            System.err.println("Errore generico: " + ex);
+        }
+        return esito;
+    }    
+
+    boolean eliminaAnnuncio(int id_annuncio) {
+        boolean esito = true;
+        try {
+            stm = conn.createStatement();
+            esito = (stm.executeUpdate("DELETE FROM annuncio WHERE id_annuncio="+ id_annuncio) > 0) ? true : false;
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+            esito = false;
         }
         return esito;
     }

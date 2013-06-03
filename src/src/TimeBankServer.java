@@ -74,4 +74,12 @@ public class TimeBankServer {
     public int modificaUtente(String username, String password, String email, String indirizzo, String cap, String citta, String provincia, boolean admin, String oldUsername) {
         return db.modificaUtente(username, password, email, indirizzo, cap, citta, provincia, admin, oldUsername);
     }
+     
+    public boolean eliminaAnnuncio(int id_annuncio){
+        return db.eliminaAnnuncio(id_annuncio);
+    }
+    
+    public int modificaAnnuncio(int id_annuncio,String data_annuncio, String descrizione, String richiedente, int id_categoria){
+            return db.modificaAnnuncio(id_annuncio,data_annuncio, descrizione, richiedente,id_categoria);
+    }
 }
