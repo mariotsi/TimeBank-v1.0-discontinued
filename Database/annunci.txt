@@ -1,0 +1,9 @@
+1  2013/05/24 00:32	2013-05-27 04:00	TRUE	Prova Annuncio	Simone	campagnolo88	5
+2	2013/05/24 14:49	2013-07-03 00:00	TRUE	Prova per la richiesta	campagnolo88	Simone	3
+3	2013/05/24 17:42	2013-05-24 18:00	TRUE	prova per la richiesta 2	campagnolo88	campagnolo88	19
+4	2013/05/24 17:44	2013-05-24 18:00	TRUE	sdadas	campagnolo88	campagnolo88	3
+5	2013/05/24 17:45	2013-05-24 18:00	TRUE	3131231	campagnolo88	campagnolo88	4
+6	2013/05/24 17:46	2013-05-24 18:00	TRUE	66566666	campagnolo88	campagnolo88	5
+7	2013/05/24 17:52	2013-05-24 18:00	TRUE	fdsdsfsd	campagnolo88	campagnolo88	14
+8	2013/05/24 17:53	2013-05-24 18:00	TRUE	098764321	Simone	campagnolo88	9
+9	2013-05-24 18:02	2013-05-24 19:00	FALSE	adfds	\N	Simone	4
