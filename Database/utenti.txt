@@ -1,0 +1,3 @@
+campagnolo88  $2a$10$SWmWgEO39WKBEnxycsmuIOYTgZ9naAsM/OuazZWZcAmq0S/5PxW/S	campagnolo88@hotmail.com	0	0	0	0	Via Eugenio Chiesa, 45	05100	055032	TR	TRUE
+Raffaele	$2a$10$nmFZ8dVBxeguT9nV3hD3xO4my/Jgw71wS4X2EA5/ywyzogCFw1ari	32131@w.ie	0	0	0	0	Strada Sperduta, 45	06053	054017	PG	FALSE
+Simone	$2a$10$fcyW9VoSRQU/JolrPTZiWOfytoxgSVmBJPog4RqznjoUQZJSKrP3u	campagnolo88@gmail.com	0	0	0	0	Via Eugenio Chiesa, 45	05100	055001	TR	FALSE
