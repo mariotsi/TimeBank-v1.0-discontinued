@@ -1,5 +1,6 @@
 <?php include_once "controlloaccessi.php" ?>
 <?php include_once "logout.php"; ?>
+<?php include_once "menu.php"; ?>
 <?php global $server;
 
 $result = $server->getAnnuncio(array('id_annuncio' => $_GET['id']));

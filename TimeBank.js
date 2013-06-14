@@ -153,8 +153,16 @@ function checkPassword() {
     }
 
 }
+/*
+ function menuHoverIn(){
+ $(this).animate({color: "#222222", fontSize:"16px"},100, function(){});
+ }
+ function menuHoverOut(){
+ $(this).animate({color: "#fff", fontSize: "14px"},200, function(){});
+ }   */
 
 $(document).ready(function () {
+    // $("a").hover(menuHoverIn, menuHoverOut);
 
     $('#password').keyup(function () {
 

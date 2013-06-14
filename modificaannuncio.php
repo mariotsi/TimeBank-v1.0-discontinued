@@ -5,6 +5,7 @@ and open the template in the editor.
 -->
 <?php include_once "controlloaccessi.php";
 include_once "logout.php";
+include_once "menu.php";
 ?>
 <!DOCTYPE html>
 <html>

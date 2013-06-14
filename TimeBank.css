@@ -366,3 +366,32 @@ select {
 .descrizioneAnnuncio {
     width: 40%
 }
+
+#menu {
+    color: #FFFFFF;
+    list-style-type: none;
+    line-height: 50px;
+    width: 160px;
+    margin-left: 10px;
+    background: #222222;
+    padding: 25px;
+    overflow: hidden;
+    top: 300px;
+    position: fixed;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+#menu a {
+    color: #FFFFFF;
+}
+
+#menu a:hover {
+    color: #B4BA22;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 16px;
+    font-style: normal;
+}
