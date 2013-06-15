@@ -194,6 +194,22 @@ public class DatabaseHandler {
                     pstm.setString(3, creatore);
                     pstm.executeUpdate();
                     esito = 0;
+                    risultatoQuery.close();
+                    stm=conn.createStatement();
+                    risultatoQuery=stm.executeQuery("SELECT email FROM utente WHERE username='"+creatore+"'");
+                    risultatoQuery.next();
+                    String emailCreatore=risultatoQuery.getString("email");
+                    risultatoQuery.close();
+                    stm=conn.createStatement();
+                    risultatoQuery=stm.executeQuery("SELECT email FROM utente WHERE username='"+richiedente+"'");
+                    risultatoQuery.next();
+                    String emailRichiedente=risultatoQuery.getString("email");
+                    risultatoQuery.close();
+                    stm=conn.createStatement();
+                    risultatoQuery=stm.executeQuery("SELECT descrizione FROM annuncio WHERE id_annuncio="+id_annuncio);
+                    risultatoQuery.next();
+                    String testo=risultatoQuery.getString("descrizione");
+                    new SendMail(emailCreatore, emailRichiedente, testo, richiedente, creatore);
                 } else {
                     esito = -4; //richiedente = creatore
                 }
