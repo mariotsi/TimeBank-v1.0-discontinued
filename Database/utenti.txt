@@ -1,3 +1,3 @@
-campagnolo88  $2a$10$SWmWgEO39WKBEnxycsmuIOYTgZ9naAsM/OuazZWZcAmq0S/5PxW/S	campagnolo88@gmail.com	0	0	0	0	Via Eugenio Chiesa, 45	05100	055032	TR	TRUE
+campagnolo88	$2a$10$SWmWgEO39WKBEnxycsmuIOYTgZ9naAsM/OuazZWZcAmq0S/5PxW/S	campagnolo88@gmail.com	0	0	0	0	Via Eugenio Chiesa, 45	05100	055032	TR	TRUE
 Simone	$2a$10$fcyW9VoSRQU/JolrPTZiWOfytoxgSVmBJPog4RqznjoUQZJSKrP3u	campagnolo88@gmail.com	0	0	0	0	Via Eugenio Chiesa, 45	05100	055001	TR	FALSE
 raffaele	$2a$10$.zbqis.H2M2LrOM6wtJDp.BsjTwpnbsV4s7kxPdi53zYgBbHkrhFe	raffaele.tosti@gmail.com	0	0	0	0	Str. Est. Com. del Venturello	06053	054017	PG	TRUE
