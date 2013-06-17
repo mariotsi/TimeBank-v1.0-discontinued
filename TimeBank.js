@@ -398,8 +398,6 @@ function arrotondaMinuti(ora) {
 }
 
 function caricaAnnunci(all) {
-
-
     if ($('#comune').val() == "Seleziona prima una provincia")
         comune = "";
     else
@@ -409,8 +407,6 @@ function caricaAnnunci(all) {
         categoria = -1;
     else
         categoria = $('#categoria').val();
-
-
     esito = -3;
     $.ajax({
         type: "POST",

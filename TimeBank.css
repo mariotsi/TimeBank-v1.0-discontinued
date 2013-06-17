@@ -24,7 +24,6 @@ a.richiesto {
 a:hover {
     text-decoration: underline;
     color: #D8DE1A;
-
 }
 
 .logout {
@@ -131,12 +130,10 @@ input[type="password"]:disabled {
 
 #richiedente {
     color: #B4BA22;
-
 }
 
 #descrizione {
     height: auto;
-
 }
 
 select {
@@ -153,7 +150,6 @@ select {
 
 .hidden {
     display: none;
-
 }
 
 #comune, #categoria, #categoriaAnnuncio {
@@ -174,7 +170,6 @@ select {
     float: left;
     z-index: 100;
     display: inline-block;
-
 }
 
 .clearer {
@@ -216,7 +211,6 @@ select {
     clear: both;
     display: block;
     width: 100%;
-
 }
 
 #invialogin {
@@ -237,7 +231,6 @@ select {
     margin-right: 50px;
     color: red;
     font-weight: bold;
-
 }
 
 .errori .centrato {
@@ -246,10 +239,8 @@ select {
 }
 
 .erroriCercaAnnunci {
-
     text-align: center;
     width: 600px;
-
     margin: 0px auto;
     color: red;
     font-weight: bold;
@@ -339,11 +330,9 @@ select {
     width: 25%;
     margin: 0px;
     line-height: 25px;
-
     overflow: hidden;
     white-space: nowrap;
     margin-right: 10px;
-/ / border-right : 1 px dotted blue;
 }
 
 .provinciaAnnuncio {
