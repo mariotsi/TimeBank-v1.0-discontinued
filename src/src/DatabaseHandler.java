@@ -66,7 +66,7 @@ public class DatabaseHandler {
             esito = -2;
             System.err.println("Errore generico: " + ex);
         }
-        return esito;
+        return esito; //-1 Utente già esistente | -2 errore SQL generico
     }
 
     public String[] getProvince() {
@@ -170,7 +170,7 @@ public class DatabaseHandler {
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            return esito;
+            return esito; //0-Ok   1-Password Sbagliata     -2 Utente non trovato   -3 Errore SQL - Generico
         }
     }
 
