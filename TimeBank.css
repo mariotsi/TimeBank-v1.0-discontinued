@@ -52,13 +52,6 @@ a:hover {
     background: url(img/clessidra.gif) no-repeat center center;
 }
 
-/*
-.clessidra:hover{
-    background: url(clessidra.gif) no-repeat;
-    visibility: hidden;
-    display: inline-block;
-}
-*/
 h3 {
     position: relative;
     top: -60px;
@@ -350,7 +343,7 @@ select {
     overflow: hidden;
     white-space: nowrap;
     margin-right: 10px;
-//  border-right : 1 px dotted blue;
+/ / border-right : 1 px dotted blue;
 }
 
 .provinciaAnnuncio {
