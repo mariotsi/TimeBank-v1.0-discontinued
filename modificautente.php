@@ -9,7 +9,7 @@ include_once "logout.php";
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Modifica Utente - TimeBank</title>
     <link href="TimeBank.css" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="jquery-1.9.1.js"></script>
     <script type="text/javascript" src="TimeBank.js"></script>
 
 
