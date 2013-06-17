@@ -2,8 +2,10 @@
 <?php include_once "logout.php"; ?>
 <?php include_once "menu.php"; ?>
 <?php global $server;
-
-$result = $server->getAnnuncio(array('id_annuncio' => $_GET['id']));
+if (isset($_GET['id']))
+    $result = $server->getAnnuncio(array('id_annuncio' => $_GET['id']));
+else //Se ho appena dovuto effettuare il login l'id dell'annunco da visualizzare lo trovo in $id_annuncio
+    $result = $server->getAnnuncio(array('id_annuncio' => $id_annuncio));
 $result = $result->return;
 $annuncio = json_decode($result, true);
 if ($annuncio['codiceErrore'] == -1)

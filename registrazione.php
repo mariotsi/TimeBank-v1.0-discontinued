@@ -26,7 +26,7 @@
     </div>
     <div id="corpo">
 
-        <form id="registrazione" onsubmit=" return inserisciUtente()">
+        <form id="registrazione" onsubmit="return inserisciUtente()">
 
             <label for="username">Username: </label>
             <input id="username" type="text" maxlength="50"/>

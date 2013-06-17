@@ -18,7 +18,7 @@ switch ($_POST['ACTION']) {
 
     case 2:
         $result = $server->inserisciUtente(array('username' => $_POST['USERNAME'], 'password' => $_POST['PASSWORD'], 'email' => $_POST['EMAIL'], 'indirizzo' => $_POST['INDIRIZZO'], 'cap' => $_POST['CAP'], 'citta' => $_POST['COMUNE'], 'provincia' => $_POST['PROVINCIA']));
-        print_r($result);
+        print_r($result->return);
         break;
 
     case 3: //Cerca i comuni facendo parte di una provincia

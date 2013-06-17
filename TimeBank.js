@@ -1,4 +1,5 @@
 function inserisciUtente() {
+    var esito = false;
     if (controllaCompilazioneCampi(false)) {
         $.ajax({
             type: "POST",
@@ -16,10 +17,22 @@ function inserisciUtente() {
             dataType: "html",
             async: false,
             success: function (risultato) {
-                alert("Utente correttamente Registrato");
-                return true;
+                switch (parseInt(risultato)) {
+                    case -2:
+                        alert("Errore nell'inserimento dell'annuncio.\nControlla che i campi siano validi e, se l'errore persiste, contatta l'amministratore");
+                        esito = false;
+                        break;
+                    case -1:
+                        alert("Username già utilizzato");
+                        esito = false;
+                        break;
+                    default:
+                        esito = true;
+                        break;
+                }
             }
         });
+        return esito;
     } else {
         alert("Compila tutti i campi");
         return false;
@@ -129,9 +142,9 @@ function checkPassword() {
     //alert(password+" "+password2);
     if (password.localeCompare(password2) != 0) {
         $("#password").css({'background': 'url(img/spunta_verde.png)'});
-        $("#password").css({'background-position': '-80px -32px'});
+        $("#password").css({'background-position': '-100px -32px'});
         $("#password2").css({'background': 'url(img/spunta_verde.png)'});
-        $("#password2").css({'background-position': '-80px -32px'});
+        $("#password2").css({'background-position': '-100px -32px'});
         $("#password").val("");
         $("#password").focus();
         $("#password2").val("");
@@ -144,9 +157,9 @@ function checkPassword() {
             alert("Password troppo corta. Minimo 6 caratteri");
         } else {
             $("#password").css({'background': 'url(img/spunta_verde.png)'});
-            $("#password").css({'background-position': '-80px 0px'});
+            $("#password").css({'background-position': '-100px 0px'});
             $("#password2").css({'background': 'url(img/spunta_verde.png)'});
-            $("#password2").css({'background-position': '-80px 0px'});
+            $("#password2").css({'background-position': '-100px 0px'});
         }
 
 
