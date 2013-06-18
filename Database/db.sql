@@ -49,7 +49,7 @@ provincia CHAR(2) REFERENCES province(provincia_list),
 admin BOOLEAN DEFAULT FALSE
 );
 
-COPY utente FROM 'C:/utenti.txt';
+COPY utente FROM 'C:/utenti.txt';/*Solo per testing*/
 
 SET DATESTYLE TO European;
 
@@ -64,7 +64,7 @@ creatore VARCHAR(50) REFERENCES utente(username) ON DELETE CASCADE ON UPDATE CAS
 categoria INTEGER default 100 REFERENCES categoria(id_categoria)  ON DELETE SET default /*100 è l'id della categoria "Senza Categoria", serve quando una categoria viene eliminata*/
 );
 
-COPY annuncio FROM 'C:/annunci.txt';
+COPY annuncio FROM 'C:/annunci.txt';/*Solo per testing*/
 
 /*Questo trigger risolve il problema che si creava quando si cancella un utente che ha richiesto almeno un annuncio. In particolare il 
 corrispondente campo "richiedente" su annuncio viene correttametne impostato a NULL grazie alla clausola ON DELETE SET DEFAULT 
@@ -72,7 +72,7 @@ ma il campo "richiesto" rimane sempre a TRUE.
 
 Ora invece ogni volta che il "richiedente" viene impostato a NULL viene anche impostato a false il campo "richiesto"*/
 CREATE OR REPLACE FUNCTION nonRichiesto() RETURNS TRIGGER AS
-  $BODY$
+	$BODY$
 	DECLARE 
 		BEGIN		
 		IF NEW.richiedente IS NULL THEN
