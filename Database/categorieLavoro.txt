@@ -1,0 +1,19 @@
+Acquisti, Logistica, Magazzino
+Affari legali
+Amministrazione, Contabilita', Segreteria
+Arti Grafiche, Design
+Commercio al Dettaglio, GDO, Retail
+Edilizia, Immobiliare
+Farmacia, Medicina, Salute
+Finanza, Banche e Credito
+Formazione, Istruzione
+Informatica, IT, Telecomunicazioni
+Ingegneria
+Marketing, Comunicazione
+Operai, Produzione, Qualita'
+Professionisti e Mestieri
+Pubblica Amministrazione
+Risorse Umane, Recruiting
+Turismo, Ristorazione
+Vendite
+Altre
